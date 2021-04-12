@@ -1110,6 +1110,13 @@
   dependencies:
     "react-native-iphone-x-helper" "^1.0.3"
 
+"@codler/react-native-keyboard-aware-scroll-view@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@codler/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-1.0.1.tgz#e823cedfd064d7dc849ec71fa3f8d9f4b0558bb6"
+  integrity sha512-ACGSY+VPJ1KwdNQi/oKt74ld2PtGW+o09hJNsllHyBWcrnke0aOxXdtaS87nRLvVXwWadRawnSrYR/PDxr5QEg==
+  dependencies:
+    react-native-iphone-x-helper "^1.0.3"
+
 "@egjs/hammerjs@^2.0.17":
   "integrity" "sha512-XQsZgjm2EcVUiZQf11UBJQfmZeEmOW8DpI1gsFeln6w0ae0ii4dMQEQ0kjl6DspdWX1aGY1/loyXnP0JS06e/A=="
   "resolved" "https://registry.npmjs.org/@egjs/hammerjs/-/hammerjs-2.0.17.tgz"
@@ -1631,6 +1638,13 @@
     "@babel/runtime" "^7.7.2"
     "regenerator-runtime" "^0.13.3"
 
+"@react-native-async-storage/async-storage@^1.15.2":
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.15.2.tgz#895898363fbb8f6db477629fd4ba0b013fe27484"
+  integrity sha512-E1SajKtyeLwi6JVfMZQx+I01z3ZvA0/O2e09EVFzU75YK0696S5N2CqeKlxAZQFVSvzh+Jfq0q412Kdkuh+l6A==
+  dependencies:
+    deep-assign "^3.0.0"
+
 "@react-native-community/cli-debugger-ui@^4.13.1":
   "integrity" "sha512-UFnkg5RTq3s2X15fSkrWY9+5BKOFjihNSnJjTV2H5PtTUFbd55qnxxPw8CxSfK0bXb1IrSvCESprk2LEpqr5cg=="
   "resolved" "https://registry.npmjs.org/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-4.13.1.tgz"
@@ -1767,6 +1781,11 @@
   "integrity" "sha512-KN/nOSxO64LxYms/8RpdjdIqemqDlxM8glDi4upg40/3JqalmXoHHBQxA0XYdAoL+padSVHAoAS6Ie5zAn8gTw=="
   "resolved" "https://registry.npmjs.org/@react-native-picker/picker/-/picker-1.14.0.tgz"
   "version" "1.14.0"
+
+"@react-native-picker/picker@^1.9.7":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-1.14.0.tgz#9c3ce0be162239a7a05b994f2bdcf5660b5466b9"
+  integrity sha512-KN/nOSxO64LxYms/8RpdjdIqemqDlxM8glDi4upg40/3JqalmXoHHBQxA0XYdAoL+padSVHAoAS6Ie5zAn8gTw==
 
 "@react-navigation/core@^5.15.3":
   "integrity" "sha512-3ZdyDInh8qg1kygCNkmh9lFgpDf29lTvPsaMe2mm/qvmxLKSgttWBz07P2fc181aV9jTdgQpzYfWZ5KWT036zw=="
