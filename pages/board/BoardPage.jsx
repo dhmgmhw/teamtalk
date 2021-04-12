@@ -1,21 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  ScrollView,
+  Dimensions,
+  TouchableOpacity,
+  RefreshControl,
+} from 'react-native';
+import BoardHeaderComponent from '../../components/board/BoardHeaderComponent';
+import { Container, View } from 'native-base';
 
-export default function BoardPage() {
+const diviceWidth = Dimensions.get('window').width;
+
+export default function BoardPage({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text>Open up BoardPage.js to start working on your app!</Text>
-      <StatusBar style='auto' />
-    </View>
+    <Container>
+      <StatusBar style='light' />
+      <BoardHeaderComponent navigation={navigation} />
+      <ScrollView></ScrollView>
+    </Container>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const styles = StyleSheet.create({});
