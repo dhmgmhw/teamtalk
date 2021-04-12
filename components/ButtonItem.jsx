@@ -2,11 +2,14 @@ import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "native-base";
 
-export default function ButtonItem({ title, navigation, page }) {
+export default function ButtonItem({ title, navigation, page, show }) {
   return (
     <TouchableOpacity
       style={styles.button}
-      onPress={() => navigation.navigate(page)}>
+      onPress={() => {
+        navigation.navigate(page);
+        show();
+      }}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );
