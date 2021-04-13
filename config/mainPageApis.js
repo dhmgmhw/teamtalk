@@ -10,7 +10,7 @@ export async function getBoardList() {
     try {
         const response = await axios({
             method: 'get',
-            url: host + '/board',
+            url: host + '/boards',
         });
         // console.log(response.data)
         return response.data
@@ -24,7 +24,7 @@ export async function getLastBoard(total) {
     try {
         const response = await axios({
             method: 'get',
-            url: host + '/board/' + total,
+            url: host + '/boards/' + total,
         });
         // console.log(response.data)
         return response.data
@@ -36,7 +36,7 @@ export async function getLastBoard(total) {
 
 export async function createBoard(title) {
     try {
-        await axios.post(host + '/board', {
+        await axios.post(host + '/boards', {
             "title": title,
         });
         // console.log(title)
