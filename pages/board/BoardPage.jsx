@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -15,6 +15,8 @@ const diviceWidth = Dimensions.get('window').width;
 const diviceHeight = Dimensions.get('window').height;
 
 export default function BoardPage({ navigation, route }) {
+  const data = route.params;
+  const title = data.title;
   let listData = [
     {
       title: '1',
@@ -26,11 +28,14 @@ export default function BoardPage({ navigation, route }) {
       title: '3',
     },
   ];
+  useEffect(() => {
+    console.log(data);
+  }, []);
 
   return (
     <Container>
       <StatusBar style='light' />
-      <BoardHeaderComponent navigation={navigation} />
+      <BoardHeaderComponent navigation={navigation} title={title} />
       <View>
         <Swiper
           height={diviceHeight}
