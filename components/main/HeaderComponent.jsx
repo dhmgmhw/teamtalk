@@ -1,7 +1,7 @@
-import React from 'react';
-import { StyleSheet, Dimensions, Image } from 'react-native';
-import { Header, Left, Body, Right, Button, Icon } from 'native-base';
-const diviceWidth = Dimensions.get('window').width;
+import React from "react";
+import { StyleSheet, Dimensions, Image } from "react-native";
+import { Header, Left, Body, Right, Button, Icon } from "native-base";
+const diviceWidth = Dimensions.get("window").width;
 
 export default function HeaderComponent() {
   return (
@@ -9,18 +9,18 @@ export default function HeaderComponent() {
       <Left></Left>
       <Body>
         <Image
-          style={{ height: 35 }}
-          resizeMode='contain'
-          source={require('../../assets/logo.png')}
+          style={{ height: 35, alignSelf: "center" }}
+          resizeMode="center"
+          source={require("../../assets/logo.png")}
         />
       </Body>
       <Right>
         <Button
           transparent
           onPress={() => {
-            console.log('Pressed!');
+            console.log("Pressed!");
           }}>
-          <Icon name='add' style={{ color: '#F2181C', fontSize: 35 }} />
+          <Icon name="add" style={{ color: "#F2181C", fontSize: 35 }} />
         </Button>
       </Right>
     </Header>
@@ -29,7 +29,7 @@ export default function HeaderComponent() {
 const styles = StyleSheet.create({
   body: {
     paddingBottom: 10,
-    backgroundColor: '#202540',
+    backgroundColor: "#202540",
     height: 40,
   },
 });

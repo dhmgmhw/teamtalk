@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -6,13 +6,14 @@ import {
   RefreshControl,
   Image,
   Text,
-} from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { Container } from 'native-base';
-import HeaderComponent from '../../components/main/HeaderComponent';
-import BoardComponent from '../../components/main/BoardComponent';
-import { getBoardList } from '../../config/MainPageApis';
-import data from '../../data.json';
+} from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { Container } from "native-base";
+import HeaderComponent from "../../components/main/HeaderComponent";
+import BoardComponent from "../../components/main/BoardComponent";
+import { getBoardList } from "../../config/MainPageApis";
+import { getStatusBarHeight } from "react-native-status-bar-height";
+import data from "../../data.json";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -38,24 +39,24 @@ export default function MainPage({ navigation }) {
   }, []);
 
   return (
-    <Container>
-      <StatusBar style='light' />
+    <Container style={{ marginTop: getStatusBarHeight() }}>
+      <StatusBar style="light" />
       <HeaderComponent />
       <ScrollView
         style={styles.container}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {boardList == '' ? (
+        {boardList == "" ? (
           <View style={styles.loading}>
             <Text style={styles.loadingText}>
-              게시판을 만들어 크루원들과{'\n'}
-              {'\n'}정보를 공유해 보세요!
+              게시판을 만들어 크루원들과{"\n"}
+              {"\n"}정보를 공유해 보세요!
             </Text>
             <Image
-              source={require('../../assets/main.png')}
+              source={require("../../assets/main.png")}
               style={styles.loadingImg}
-              resizeMode={'contain'}
+              resizeMode={"contain"}
             />
           </View>
         ) : (
@@ -73,11 +74,12 @@ export default function MainPage({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
+    marginTop: getStatusBarHeight(),
   },
   loading: {
-    position: 'absolute',
-    alignSelf: 'center',
+    position: "absolute",
+    alignSelf: "center",
     top: 150,
   },
   loadingImg: {
@@ -86,8 +88,8 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center",
     top: 40,
-    color: '#202540',
+    color: "#202540",
   },
 });
