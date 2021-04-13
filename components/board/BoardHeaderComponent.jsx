@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions, Image, Text } from "react-native";
 import { Header, Left, Body, Right, Button, Icon } from "native-base";
 const diviceWidth = Dimensions.get("window").width;
 
-export default function BoardHeaderComponent({ navigation }) {
+export default function BoardHeaderComponent({ navigation, title }) {
   return (
     <Header style={styles.body}>
       <Left>
@@ -19,7 +19,9 @@ export default function BoardHeaderComponent({ navigation }) {
         </Button>
       </Left>
       <Body>
-        <Text style={styles.groupName}>19조</Text>
+        <Text ellipsizeMode={"tail"} numberOfLines={1} style={styles.groupName}>
+          {title}
+        </Text>
       </Body>
       <Right>
         <Button
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
     height: 40,
   },
   groupName: {
-    fontSize: 23,
+    fontSize: 15,
     color: "white",
     fontWeight: "600",
     top: 3,

@@ -1,22 +1,23 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect } from "react";
+
 import {
   StyleSheet,
   Text,
   ScrollView,
   Dimensions,
   TouchableOpacity,
-  RefreshControl,
 } from "react-native";
 import BoardHeaderComponent from "../../components/board/BoardHeaderComponent";
 import { Container, View, Button, Icon } from "native-base";
 import Swiper from "react-native-swiper-hooks";
-import { getStatusBarHeight } from "react-native-status-bar-height";
 
 const diviceWidth = Dimensions.get("window").width;
 const diviceHeight = Dimensions.get("window").height;
 
-export default function BoardPage({ navigation }) {
+export default function BoardPage({ navigation, route }) {
+  const data = route.params;
+  const title = data.title;
   let listData = [
     {
       title: "1",
@@ -28,11 +29,14 @@ export default function BoardPage({ navigation }) {
       title: "3",
     },
   ];
+  useEffect(() => {
+    console.log(data);
+  }, []);
 
   return (
-    <Container style={{ marginTop: getStatusBarHeight() }}>
+    <Container>
       <StatusBar style="light" />
-      <BoardHeaderComponent navigation={navigation} />
+      <BoardHeaderComponent navigation={navigation} title={title} />
       <View>
         <Swiper
           height={diviceHeight}
@@ -55,6 +59,7 @@ export default function BoardPage({ navigation }) {
             );
           })}
         </Swiper>
+
         <Button
           style={styles.addBtn}
           onPress={() => {
