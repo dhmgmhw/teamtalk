@@ -1,5 +1,5 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useEffect } from "react";
+import { StatusBar } from 'expo-status-bar';
+import React, { useEffect } from 'react';
 
 import {
   StyleSheet,
@@ -7,43 +7,28 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
-} from "react-native";
-import BoardHeaderComponent from "../../components/board/BoardHeaderComponent";
-import { Container, View, Button, Icon } from "native-base";
-import Swiper from "react-native-swiper-hooks";
+} from 'react-native';
+import BoardHeaderComponent from '../../components/board/BoardHeaderComponent';
+import { Container, View, Button, Icon } from 'native-base';
+import Swiper from 'react-native-swiper-hooks';
 
-const diviceWidth = Dimensions.get("window").width;
-const diviceHeight = Dimensions.get("window").height;
+const diviceWidth = Dimensions.get('window').width;
+const diviceHeight = Dimensions.get('window').height;
 
 export default function BoardPage({ navigation, route }) {
   const data = route.params;
   const title = data.title;
-<<<<<<< HEAD
-=======
-  let listData = [
-    {
-      title: "1",
-    },
-    {
-      title: "2",
-    },
-    {
-      title: "3",
-    },
-  ];
->>>>>>> 4d6c5aa6e4d706925d8b645b3c07639315d49190
   useEffect(() => {
     console.log(data);
   }, []);
 
   return (
     <Container>
-      <StatusBar style="light" />
+      <StatusBar style='light' />
       <BoardHeaderComponent navigation={navigation} title={title} />
       <View>
         <Swiper
           height={diviceHeight}
-<<<<<<< HEAD
           autoplay={false}
           loop={false}
           showPagination={true}
@@ -56,34 +41,14 @@ export default function BoardPage({ navigation, route }) {
             }}>
             <Text>오하요</Text>
           </ScrollView>
-=======
-          showPagination={"#CCFF66"}
-          autoplay={false}
-          loop={false}
-          showPagination={true}
-          direction={"row"}
-          style={styles.pinCard}
-          showPagination={false}>
-          {listData.map((item, idx) => {
-            return (
-              <ScrollView
-                style={{
-                  width: diviceWidth,
-                }}
-                key={idx}>
-                <Text>{item.title}</Text>
-              </ScrollView>
-            );
-          })}
->>>>>>> 4d6c5aa6e4d706925d8b645b3c07639315d49190
         </Swiper>
 
         <Button
           style={styles.addBtn}
           onPress={() => {
-            console.log("Add Pin");
+            console.log('Add Pin');
           }}>
-          <Icon name="add" style={{ color: "white", fontSize: 40, right: 4 }} />
+          <Icon name='add' style={{ color: 'white', fontSize: 40, right: 4 }} />
         </Button>
       </View>
     </Container>
@@ -95,12 +60,12 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   addBtn: {
-    position: "absolute",
+    position: 'absolute',
     height: 60,
     width: 60,
     borderRadius: 100,
-    backgroundColor: "#F2181C",
-    shadowColor: "black",
+    backgroundColor: '#F2181C',
+    shadowColor: 'black',
     shadowOffset: {
       width: 1,
       height: 3,
