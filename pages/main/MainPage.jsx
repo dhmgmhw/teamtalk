@@ -1,27 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
-  Text,
   ScrollView,
-  Dimensions,
-  TouchableOpacity,
+  View,
   RefreshControl,
+  Image,
+  Text,
 } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { Container } from 'native-base';
 import HeaderComponent from '../../components/main/HeaderComponent';
-import { Container, View } from 'native-base';
+import BoardComponent from '../../components/main/BoardComponent';
+import { getBoardList } from '../../config/MainPageApis';
+import data from '../../data.json';
 
-const diviceWidth = Dimensions.get('window').width;
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
+const mock = data.board;
 
 export default function MainPage({ navigation }) {
+  const [boardList, setBoardList] = useState(mock);
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  const download = async () => {
+    const result = await getBoardList();
+    setBoardList(result);
+  };
+
+  useEffect(() => {
+    download();
   }, []);
 
   return (
@@ -33,17 +46,26 @@ export default function MainPage({ navigation }) {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        <TouchableOpacity
-          style={styles.card}
-          onPress={() => {
-            navigation.navigate('BoardPage');
-          }}
-          onLongPress={() => {
-            console.log('Miracle!');
-          }}>
-          <Text style={styles.groupName}>19조</Text>
-          <Text style={styles.groupMember}>나중에 넣을 기능</Text>
-        </TouchableOpacity>
+        {boardList == '' ? (
+          <View style={styles.loading}>
+            <Text style={styles.loadingText}>
+              게시판을 만들어 크루원들과{'\n'}
+              {'\n'}정보를 공유해 보세요!
+            </Text>
+            <Image
+              source={require('../../assets/main.png')}
+              style={styles.loadingImg}
+              resizeMode={'contain'}
+            />
+          </View>
+        ) : (
+          <></>
+        )}
+        {boardList.map((board, i) => {
+          return (
+            <BoardComponent board={board} key={i} navigation={navigation} />
+          );
+        })}
       </ScrollView>
     </Container>
   );
@@ -53,34 +75,19 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
   },
-  // 카드컴포넌트 이주
-  card: {
-    width: diviceWidth * 0.95,
-    height: 70,
-    backgroundColor: '#202540',
+  loading: {
+    position: 'absolute',
     alignSelf: 'center',
-    marginTop: 10,
-    borderRadius: 10,
-    shadowColor: 'black',
-    shadowOffset: {
-      width: 1,
-      height: 3,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 3,
+    top: 150,
   },
-  groupName: {
-    fontSize: 23,
-    color: 'white',
-    fontWeight: '600',
-    marginTop: 20,
-    marginLeft: 25,
+  loadingImg: {
+    height: 300,
+    width: 300,
   },
-  groupMember: {
-    fontSize: 15,
-    color: 'white',
-    textAlign: 'right',
-    marginRight: 20,
-    bottom: 5,
+  loadingText: {
+    fontSize: 20,
+    textAlign: 'center',
+    top: 40,
+    color: '#202540',
   },
 });

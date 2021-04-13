@@ -25,9 +25,12 @@ export default function BoardHeaderComponent({ navigation }) {
         <Button
           transparent
           onPress={() => {
-            console.log('God I made it!');
+            console.log('참가인원');
           }}>
-          <Icon name='add' style={{ color: 'white', fontSize: 35 }} />
+          <Icon
+            name='people-sharp'
+            style={{ color: 'white', fontSize: 30, top: 2 }}
+          />
         </Button>
       </Right>
     </Header>
