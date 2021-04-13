@@ -5,7 +5,7 @@ const diviceWidth = Dimensions.get('window').width;
 
 export default function BoardComponent({ navigation, board }) {
   useEffect(() => {
-    console.log(board);
+    // console.log(board);
   }, []);
 
   return (
@@ -18,7 +18,7 @@ export default function BoardComponent({ navigation, board }) {
         console.log('Miracle!');
       }}>
       <Text style={styles.groupName}>{board.title}</Text>
-      <Text style={styles.groupMember}>{board.name}</Text>
+      <Text style={styles.groupMember}>{board.user}</Text>
     </Pressable>
   );
 }
@@ -51,6 +51,5 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'right',
     marginRight: 20,
-    bottom: 5,
   },
 });

@@ -17,17 +17,6 @@ const diviceHeight = Dimensions.get('window').height;
 export default function BoardPage({ navigation, route }) {
   const data = route.params;
   const title = data.title;
-  let listData = [
-    {
-      title: '1',
-    },
-    {
-      title: '2',
-    },
-    {
-      title: '3',
-    },
-  ];
   useEffect(() => {
     console.log(data);
   }, []);
@@ -39,24 +28,18 @@ export default function BoardPage({ navigation, route }) {
       <View>
         <Swiper
           height={diviceHeight}
-          showPagination={'#CCFF66'}
           autoplay={false}
           loop={false}
           showPagination={true}
           direction={'row'}
-          style={styles.pinCard}
-          showPagination={false}>
-          {listData.map((item, idx) => {
-            return (
-              <ScrollView
-                style={{
-                  width: diviceWidth,
-                }}
-                key={idx}>
-                <Text>{item.title}</Text>
-              </ScrollView>
-            );
-          })}
+          style={styles.pinCard}>
+          <ScrollView
+            style={{
+              width: diviceWidth,
+              backgroundColor: 'lightgrey',
+            }}>
+            <Text>오하요</Text>
+          </ScrollView>
         </Swiper>
 
         <Button
