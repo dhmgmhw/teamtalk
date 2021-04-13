@@ -4,11 +4,15 @@ import { StyleSheet, Text, Dimensions, Pressable } from 'react-native';
 const diviceWidth = Dimensions.get('window').width;
 
 export default function BoardComponent({ navigation, board }) {
+  useEffect(() => {
+    console.log(board);
+  }, []);
+
   return (
     <Pressable
       style={styles.card}
       onPress={() => {
-        navigation.navigate('BoardPage');
+        navigation.navigate('BoardPage', board);
       }}
       onLongPress={() => {
         console.log('Miracle!');

@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions, Image } from 'react-native';
 import { Header, Left, Body, Right, Button, Icon } from 'native-base';
 const diviceWidth = Dimensions.get('window').width;
 
-export default function HeaderComponent() {
+export default function HeaderComponent({ event }) {
   return (
     <Header style={styles.body}>
       <Left></Left>
@@ -15,11 +15,7 @@ export default function HeaderComponent() {
         />
       </Body>
       <Right>
-        <Button
-          transparent
-          onPress={() => {
-            console.log('Pressed!');
-          }}>
+        <Button transparent onPress={event}>
           <Icon name='add' style={{ color: '#F2181C', fontSize: 35 }} />
         </Button>
       </Right>

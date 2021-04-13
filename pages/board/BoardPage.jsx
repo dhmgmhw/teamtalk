@@ -6,7 +6,6 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
-  RefreshControl,
 } from 'react-native';
 import BoardHeaderComponent from '../../components/board/BoardHeaderComponent';
 import { Container, View, Button, Icon } from 'native-base';
@@ -15,7 +14,7 @@ import Swiper from 'react-native-swiper-hooks';
 const diviceWidth = Dimensions.get('window').width;
 const diviceHeight = Dimensions.get('window').height;
 
-export default function BoardPage({ navigation }) {
+export default function BoardPage({ navigation, route }) {
   let listData = [
     {
       title: '1',
@@ -54,6 +53,7 @@ export default function BoardPage({ navigation }) {
             );
           })}
         </Swiper>
+
         <Button
           style={styles.addBtn}
           onPress={() => {
