@@ -9,6 +9,8 @@ import ButtonItem from "../../components/ButtonItem";
 import TextItem from "../../components/TextItem";
 import InputItem from "../../components/InputItem";
 
+import { signIn } from "../../config/LoginApis";
+
 export default function LoginPage({ navigation }) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -16,6 +18,10 @@ export default function LoginPage({ navigation }) {
 
   const buttonShow = () => {
     setShow(true);
+  };
+
+  const doSignIn = () => {
+    signIn(name, password, navigation);
   };
 
   const showButton = () => {
@@ -27,7 +33,9 @@ export default function LoginPage({ navigation }) {
       );
     } else {
       return (
-        <TouchableOpacity style={[styles.button, styles.active]}>
+        <TouchableOpacity
+          style={[styles.button, styles.active]}
+          onPress={() => navigation.navigate("MainPage")}>
           <Text style={styles.text}>Log In</Text>
         </TouchableOpacity>
       );

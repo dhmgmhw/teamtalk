@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   ScrollView,
@@ -9,21 +9,21 @@ import {
   Alert,
   Text,
   Dimensions,
-} from 'react-native';
-import { Container, Icon } from 'native-base';
-import HeaderComponent from '../../components/main/HeaderComponent';
-import BoardComponent from '../../components/main/BoardComponent';
-import Loading from '../../Loading';
+} from "react-native";
+import { Container, Icon } from "native-base";
+import HeaderComponent from "../../components/main/HeaderComponent";
+import BoardComponent from "../../components/main/BoardComponent";
+import Loading from "../../Loading";
 import {
   getBoardList,
   createBoard,
   getLastBoard,
-} from '../../config/MainPageApis';
-import { Input, Overlay } from 'react-native-elements';
-import data from '../../data.json';
+} from "../../config/MainPageApis";
+import { Input, Overlay } from "react-native-elements";
+import data from "../../data.json";
 
-const diviceWidth = Dimensions.get('window').width;
-const diviceHeight = Dimensions.get('window').Height;
+const diviceWidth = Dimensions.get("window").width;
+const diviceHeight = Dimensions.get("window").Height;
 
 const mock = data.board;
 const wait = (timeout) => {
@@ -35,7 +35,7 @@ export default function MainPage({ navigation }) {
   const [boardList, setBoardList] = useState();
   const [refreshing, setRefreshing] = React.useState(false);
   const [visible, setVisible] = useState(false);
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -46,8 +46,8 @@ export default function MainPage({ navigation }) {
   };
 
   const newBoard = async () => {
-    if (title == '') {
-      Alert.alert('보드 이름을 입력해주세요!');
+    if (title == "") {
+      Alert.alert("보드 이름을 입력해주세요!");
       return false;
     } else {
       await createBoard(title);
@@ -57,7 +57,7 @@ export default function MainPage({ navigation }) {
       let nextData = await getLastBoard(total);
       let newData = [...boardList, nextData];
       await setBoardList(newData);
-      Alert.alert('크루원을 초대해 작당모의를 하세요!');
+      Alert.alert("크루원을 초대해 작당모의를 하세요!");
     }
   };
 
@@ -74,21 +74,22 @@ export default function MainPage({ navigation }) {
   return ready ? (
     <Container>
       <HeaderComponent event={toggleOverlay} />
+
       <ScrollView
         style={styles.container}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        {boardList == '' ? (
+        {boardList == "" ? (
           <View style={styles.firstPage}>
             <Text style={styles.firstPageText}>
-              게시판을 만들어 크루원들과{'\n'}
-              {'\n'}정보를 공유해 보세요!
+              게시판을 만들어 크루원들과{"\n"}
+              {"\n"}정보를 공유해 보세요!
             </Text>
             <Image
-              source={require('../../assets/main.png')}
+              source={require("../../assets/main.png")}
               style={styles.firstPageImg}
-              resizeMode={'contain'}
+              resizeMode={"contain"}
             />
           </View>
         ) : (
@@ -103,21 +104,21 @@ export default function MainPage({ navigation }) {
           <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
             <View style={styles.modalBox}>
               <Input
-                placeholder='게시판에서 정보를 공유해 보세요!'
+                placeholder="게시판에서 정보를 공유해 보세요!"
                 onChangeText={(text) => {
                   setTitle(text);
                 }}
               />
               <Pressable style={styles.createBtn} onPress={newBoard}>
                 <Icon
-                  name='easel-outline'
-                  style={{ color: 'white', fontSize: 20 }}
+                  name="easel-outline"
+                  style={{ color: "white", fontSize: 20 }}
                 />
                 <Text
                   style={{
                     fontSize: 15,
-                    color: 'white',
-                    textAlign: 'center',
+                    color: "white",
+                    textAlign: "center",
                     marginLeft: 5,
                   }}>
                   새 게시판 만들기
@@ -135,11 +136,13 @@ export default function MainPage({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
+    marginTop: getStatusBarHeight(),
   },
   firstPage: {
-    position: 'absolute',
-    alignSelf: 'center',
+    position: "absolute",
+    alignSelf: "center",
+
     top: 150,
   },
   firstPageImg: {
@@ -148,29 +151,29 @@ const styles = StyleSheet.create({
   },
   firstPageText: {
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: "center",
     top: 40,
-    color: '#202540',
+    color: "#202540",
   },
   modalBox: {
     width: diviceWidth * 0.8,
     height: 100,
   },
   createBtn: {
-    backgroundColor: '#202540',
+    backgroundColor: "#202540",
     width: 150,
     height: 28,
-    alignSelf: 'center',
+    alignSelf: "center",
     borderRadius: 100,
-    shadowColor: 'grey',
+    shadowColor: "grey",
     shadowOffset: {
       width: 1,
       height: 3,
     },
     shadowOpacity: 0.7,
     shadowRadius: 3,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingLeft: 10,
   },
 });
