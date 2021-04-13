@@ -7,21 +7,46 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  Pressable,
+  Alert,
 } from "react-native";
 import { getStatusBarHeight } from "react-native-status-bar-height";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import { Thumbnail } from "native-base";
 
 const talk = require("../../assets/teamtalk.png");
+const react = require("../../assets/react.png");
+const reactnative = require("../../assets/reactnative.png");
+const spring = require("../../assets/spring.png");
+const node = require("../../assets/node.png");
 const iu = require("../../assets/iu.png");
 const WindowWidth = Dimensions.get("window").width;
 
 import InputItem from "../../components/InputItem";
 
+import { signup } from "../../config/LoginApis";
+
 export default function SignUpPage({ navigation }) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [skill, setSkill] = useState("");
+
+  let skillChoose = (d) => {
+    setSkill(d);
+  };
+
+  const register = async () => {
+    if (password !== passwordConfirm) {
+      Alert.alert("비밀번호가 서로 일치 하지 않습니다.");
+      setPasswordConfirm("");
+      return false;
+    } else {
+      setPasswordConfirm("");
+      setPassword("");
+    }
+    signup(name, password, skill, navigation);
+  };
 
   const showButton = () => {
     if (name == "" || password == "" || passwordConfirm == "") {
@@ -32,7 +57,9 @@ export default function SignUpPage({ navigation }) {
       );
     } else {
       return (
-        <TouchableOpacity style={[styles.button, styles.active]}>
+        <TouchableOpacity
+          style={[styles.button, styles.active]}
+          onPress={() => register()}>
           <Text style={styles.text}>SIGN UP</Text>
         </TouchableOpacity>
       );
@@ -54,20 +81,40 @@ export default function SignUpPage({ navigation }) {
       <View style={styles.swipercontainer}>
         <SwiperFlatList autoplay autoplayDelay={3} autoplayLoop showPagination>
           <View style={[styles.child, { backgroundColor: "transparent" }]}>
-            <Thumbnail large style={styles.text} source={iu} />
-            <Text style={styles.text}>1</Text>
+            <TouchableOpacity
+              onPress={async () => {
+                await skillChoose(react);
+                await Alert.alert("React 선택!");
+              }}>
+              <Thumbnail large style={styles.text} source={react} />
+            </TouchableOpacity>
           </View>
           <View style={[styles.child, { backgroundColor: "transparent" }]}>
-            <Thumbnail large style={styles.text} source={iu} />
-            <Text style={styles.text}>2</Text>
+            <TouchableOpacity
+              onPress={async () => {
+                await skillChoose(reactnative);
+                await Alert.alert("ReactNative 선택!");
+              }}>
+              <Thumbnail large style={styles.text} source={reactnative} />
+            </TouchableOpacity>
           </View>
           <View style={[styles.child, { backgroundColor: "transparent" }]}>
-            <Thumbnail large style={styles.text} source={iu} />
-            <Text style={styles.text}>3</Text>
+            <TouchableOpacity
+              onPress={async () => {
+                await skillChoose(spring);
+                await Alert.alert("Spring 선택!");
+              }}>
+              <Thumbnail large style={styles.text} source={spring} />
+            </TouchableOpacity>
           </View>
           <View style={[styles.child, { backgroundColor: "transparent" }]}>
-            <Thumbnail large style={styles.text} source={iu} />
-            <Text style={styles.text}>4</Text>
+            <TouchableOpacity
+              onPress={async () => {
+                await skillChoose(node);
+                await Alert.alert("Node.js 선택!");
+              }}>
+              <Thumbnail large style={styles.text} source={node} />
+            </TouchableOpacity>
           </View>
         </SwiperFlatList>
       </View>
@@ -122,11 +169,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
     alignItems: "center",
-  },
-  text: {
-    color: "white",
-    fontSize: 18,
-    fontWeight: "bold",
   },
   active: {
     opacity: 1,
