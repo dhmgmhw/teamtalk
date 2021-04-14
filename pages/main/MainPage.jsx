@@ -34,7 +34,7 @@ const wait = (timeout) => {
 export default function MainPage({ navigation }) {
   const [ready, setReady] = useState(false);
   const [boardList, setBoardList] = useState();
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState('');
 
@@ -42,6 +42,7 @@ export default function MainPage({ navigation }) {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
+
   const toggleOverlay = () => {
     setVisible(!visible);
   };
