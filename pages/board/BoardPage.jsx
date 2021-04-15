@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-
 import {
   StyleSheet,
   Text,
@@ -11,8 +10,7 @@ import {
   Image,
 } from 'react-native';
 import BoardHeaderComponent from '../../components/board/BoardHeaderComponent';
-import { Container, View, Button, Icon } from 'native-base';
-import { Input, Overlay } from 'react-native-elements';
+import { Container, View } from 'native-base';
 
 import Swiper from 'react-native-swiper-hooks';
 
@@ -24,11 +22,6 @@ export default function BoardPage({ navigation, route }) {
   const title = data.title;
   const pin = data.pin;
 
-  const toggleOverlay = () => {
-    setVisible(!visible);
-  };
-
-  const [visible, setVisible] = useState(false);
   const [pinTitle, setPinTitle] = useState('');
   const [text, onChangeText] = useState();
   const [inputVisible, SetInputVisible] = useState(false);
@@ -46,7 +39,8 @@ export default function BoardPage({ navigation, route }) {
         <Swiper
           height={diviceHeight}
           showPagination={true}
-          paginationSelectedColor={'black'}
+          paginationSelectedColor={'#202540'}
+          paginationPosition={'top'}
           autoplay={false}
           loop={false}
           direction={'row'}
@@ -64,14 +58,14 @@ export default function BoardPage({ navigation, route }) {
                   paddingHorizontal: 10,
                   marginBottom: 10,
                 }}>
-                제목이 될거야
+                공지사항
               </Text>
               <Pressable
                 style={styles.card}
                 onPress={() => {
                   console.log('enter card');
                 }}>
-                <Text style={styles.cardTitle}>빙빙 음</Text>
+                <Text style={styles.cardTitle}>200415 조회현황</Text>
                 <View
                   style={{
                     flex: 1,
@@ -79,7 +73,7 @@ export default function BoardPage({ navigation, route }) {
                     justifyContent: 'flex-end',
                     alignItems: 'center',
                   }}>
-                  <Text style={styles.cardUser}>김제코</Text>
+                  <Text style={styles.cardUser}>구마적</Text>
                   <Image
                     style={{
                       width: 25,
@@ -114,12 +108,12 @@ export default function BoardPage({ navigation, route }) {
                 }}>
                 <Text
                   style={{
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: '500',
                     color: 'white',
                     textAlign: 'center',
                   }}>
-                  Add...
+                  Add card...
                 </Text>
               </Pressable>
             </View>
@@ -137,7 +131,7 @@ export default function BoardPage({ navigation, route }) {
                   paddingHorizontal: 10,
                   marginBottom: 10,
                 }}>
-                제목이 될거야
+                카드가 없는 핀
               </Text>
               {/* <Pressable
                 style={styles.card}
@@ -168,6 +162,43 @@ export default function BoardPage({ navigation, route }) {
               {inputVisible ? (
                 <TextInput
                   style={styles.input}
+                  placeholder='새로운 카드 이름'
+                  onChangeText={onChangeText}
+                  value={text}
+                />
+              ) : (
+                <></>
+              )}
+              <Pressable
+                style={styles.addBtn}
+                onPress={() => {
+                  {
+                    inputVisible
+                      ? SetInputVisible(false)
+                      : SetInputVisible(true);
+                  }
+                  console.log('add!');
+                }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '500',
+                    color: 'white',
+                    textAlign: 'center',
+                  }}>
+                  Add card...
+                </Text>
+              </Pressable>
+            </View>
+          </ScrollView>
+          <View
+            style={{
+              width: diviceWidth,
+            }}>
+            <View style={styles.pinAddBox}>
+              {inputVisible ? (
+                <TextInput
+                  style={styles.input}
                   placeholder='새로운 핀 이름'
                   onChangeText={onChangeText}
                   value={text}
@@ -187,52 +218,17 @@ export default function BoardPage({ navigation, route }) {
                 }}>
                 <Text
                   style={{
-                    fontSize: 18,
+                    fontSize: 15,
                     fontWeight: '500',
                     color: 'white',
                     textAlign: 'center',
                   }}>
-                  Add...
+                  Add new pin
                 </Text>
               </Pressable>
             </View>
-          </ScrollView>
-        </Swiper>
-        <Button
-          style={styles.addPinBtn}
-          onPress={() => {
-            setVisible(true);
-          }}>
-          <Icon
-            name='duplicate'
-            style={{ color: 'white', fontSize: 30, alignSelf: 'center' }}
-          />
-        </Button>
-        <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-          <View style={styles.modalBox}>
-            <Input
-              placeholder='새로운 핀 제목'
-              onChangeText={(text) => {
-                setPinTitle(text);
-              }}
-            />
-            <Pressable
-              style={{ backgroundColor: 'red' }}
-              onPress={() => {
-                console.log('pressed!');
-              }}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  color: 'white',
-                  textAlign: 'center',
-                  marginLeft: 5,
-                }}>
-                새 게시판 만들기
-              </Text>
-            </Pressable>
           </View>
-        </Overlay>
+        </Swiper>
       </View>
     </Container>
   );
@@ -271,6 +267,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 20,
     padding: 10,
+  },
+  pinAddBox: {
+    width: '85%',
+    backgroundColor: '#202540',
+    opacity: 0.5,
+    alignSelf: 'center',
+    borderRadius: 10,
+    marginTop: 20,
+    padding: 15,
   },
   input: {
     backgroundColor: '#EBEBEB',
