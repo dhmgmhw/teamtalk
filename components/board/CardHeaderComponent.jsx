@@ -3,34 +3,28 @@ import { StyleSheet, Text } from 'react-native';
 import { Icon } from 'native-base';
 import { Header } from 'react-native-elements';
 
-export default function BoardHeaderComponent({ navigation, title, func }) {
+export default function CardHeaderComponent({ navigation, title }) {
   return (
     <Header
-      backgroundColor={'#202540'}
+      backgroundColor={'#ebebeb'}
       leftComponent={
         <Icon
           name='chevron-back-sharp'
-          style={{ color: 'white', fontSize: 35 }}
+          style={{ color: '#202540', fontSize: 35 }}
           onPress={() => {
             navigation.goBack();
           }}
         />
       }
-      centerComponent={<Text style={styles.groupName}>{title}</Text>}
-      rightComponent={
-        <Icon
-          onPress={func}
-          name='add'
-          style={{ color: 'white', fontSize: 30, top: 2 }}
-        />
-      }
+      centerComponent={<Text style={styles.cardTitle}>{title}</Text>}
+      rightComponent={''}
     />
   );
 }
 const styles = StyleSheet.create({
-  groupName: {
-    fontSize: 15,
-    color: 'white',
+  cardTitle: {
+    fontSize: 18,
+    color: '#202540',
     fontWeight: '600',
     top: 10,
     alignSelf: 'center',
