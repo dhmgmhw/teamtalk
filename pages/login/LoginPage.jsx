@@ -1,19 +1,19 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import { getStatusBarHeight } from "react-native-status-bar-height";
+import { StatusBar } from 'expo-status-bar';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
-const talk = require("../../assets/teamtalk.png");
+const talk = require('../../assets/teamtalk.png');
 
-import ButtonItem from "../../components/ButtonItem";
-import TextItem from "../../components/TextItem";
-import InputItem from "../../components/InputItem";
+import ButtonItem from '../../components/ButtonItem';
+import TextItem from '../../components/TextItem';
+import InputItem from '../../components/InputItem';
 
-import { signIn } from "../../config/LoginApis";
+import { signIn } from '../../config/LoginApis';
 
 export default function LoginPage({ navigation }) {
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
 
   const buttonShow = () => {
@@ -25,7 +25,7 @@ export default function LoginPage({ navigation }) {
   };
 
   const showButton = () => {
-    if (name == "" || password == "") {
+    if (name == '' || password == '') {
       return (
         <TouchableOpacity disabled style={[styles.button, styles.disabled]}>
           <Text style={styles.text}>Log In</Text>
@@ -35,7 +35,7 @@ export default function LoginPage({ navigation }) {
       return (
         <TouchableOpacity
           style={[styles.button, styles.active]}
-          onPress={() => navigation.navigate("MainPage")}>
+          onPress={() => navigation.navigate('MainPage')}>
           <Text style={styles.text}>Log In</Text>
         </TouchableOpacity>
       );
@@ -43,19 +43,19 @@ export default function LoginPage({ navigation }) {
   };
 
   useEffect(() => {
-    navigation.addListener("beforeRemove", (e) => {
+    navigation.addListener('beforeRemove', (e) => {
       e.preventDefault();
     });
   }, []);
 
   return show ? (
     <View style={styles.container}>
-      <StatusBar style="auto" />
-      <Image source={talk} resizeMode="cover" style={{ marginBottom: 30 }} />
-      <InputItem hint={"이름"} value={name} setFunc={setName} />
+      <StatusBar style='auto' />
+      <Image source={talk} resizeMode='cover' style={{ marginBottom: 30 }} />
+      <InputItem hint={'이름'} value={name} setFunc={setName} />
       <InputItem
-        hint={"비밀번호"}
-        type={"password"}
+        hint={'비밀번호'}
+        type={'password'}
         value={password}
         setFunc={setPassword}
       />
@@ -63,29 +63,29 @@ export default function LoginPage({ navigation }) {
 
       <View style={{ marginTop: 100 }}>
         <TextItem
-          title={"Sign up"}
+          title={'회원가입'}
           navigation={navigation}
-          page={"SignUpPage"}
+          page={'SignUpPage'}
         />
       </View>
     </View>
   ) : (
     <View style={styles.container}>
-      <StatusBar style="auto" />
-      <Image source={talk} resizeMode="cover" style={{ marginBottom: 30 }} />
+      <StatusBar style='auto' />
+      <Image source={talk} resizeMode='cover' style={{ marginBottom: 150 }} />
 
       <ButtonItem
-        title={"Log In"}
+        title={'Log In'}
         navigation={navigation}
-        page={"LoginPage"}
+        page={'LoginPage'}
         show={buttonShow}
       />
 
-      <View style={{ marginTop: 100 }}>
+      <View style={{ marginTop: 20 }}>
         <TextItem
-          title={"Sign up"}
+          title={'회원가입'}
           navigation={navigation}
-          page={"SignUpPage"}
+          page={'SignUpPage'}
         />
       </View>
     </View>
@@ -95,10 +95,9 @@ export default function LoginPage({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: getStatusBarHeight(),
-    backgroundColor: "#202540",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#202540',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   active: {
@@ -108,17 +107,17 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   button: {
-    backgroundColor: "#F2181C",
+    backgroundColor: '#F2181C',
     width: 265,
     height: 40,
     borderRadius: 15,
-    alignSelf: "center",
-    justifyContent: "center",
-    alignItems: "center",
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
-    color: "white",
+    color: 'white',
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 });
