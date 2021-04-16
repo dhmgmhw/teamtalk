@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, Text, Dimensions, Pressable } from 'react-native';
 
 const diviceWidth = Dimensions.get('window').width;
 
 export default function BoardComponent({ navigation, board }) {
-  useEffect(() => {
-    // console.log(board);
-  }, []);
-
   return (
     <Pressable
       style={styles.card}
@@ -15,7 +11,7 @@ export default function BoardComponent({ navigation, board }) {
         navigation.navigate('BoardPage', board);
       }}
       onLongPress={() => {
-        console.log('Miracle!');
+        console.log('Delete!');
       }}>
       <Text style={styles.groupName}>{board.title}</Text>
       <Text style={styles.groupMember}>{board.user}</Text>
