@@ -4,7 +4,6 @@ import {
   ScrollView,
   View,
   Pressable,
-  RefreshControl,
   Image,
   Alert,
   Text,
@@ -21,27 +20,15 @@ import {
   createBoard,
   getLastBoard,
 } from '../../config/MainPageApis';
-import data from '../../data.json';
 
 const diviceWidth = Dimensions.get('window').width;
 const diviceHeight = Dimensions.get('window').Height;
 
-const mock = data.board;
-const wait = (timeout) => {
-  return new Promise((resolve) => setTimeout(resolve, timeout));
-};
-
 export default function MainPage({ navigation }) {
   const [ready, setReady] = useState(false);
   const [boardList, setBoardList] = useState();
-  const [refreshing, setRefreshing] = useState(false);
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState('');
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    wait(2000).then(() => setRefreshing(false));
-  }, []);
 
   const toggleOverlay = () => {
     setVisible(!visible);
@@ -59,12 +46,13 @@ export default function MainPage({ navigation }) {
       let nextData = await getLastBoard(total);
       let newData = [...boardList, nextData];
       await setBoardList(newData);
-      Alert.alert('크루원을 초대해 작당모의를 하세요!');
+      Alert.alert('보드를 생성했습니다!');
     }
   };
 
   const download = async () => {
     const result = await getBoardList();
+    console.log(result);
     setBoardList(result);
     setReady(true);
   };
@@ -77,11 +65,7 @@ export default function MainPage({ navigation }) {
     <Container>
       <HeaderComponent event={toggleOverlay} />
 
-      <ScrollView
-        style={styles.container}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
+      <ScrollView style={styles.container}>
         {boardList == '' ? (
           <View style={styles.firstPage}>
             <Text style={styles.firstPageText}>
