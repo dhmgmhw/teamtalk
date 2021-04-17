@@ -41,18 +41,14 @@ export default function MainPage({ navigation }) {
     } else {
       await createBoard(title);
       setVisible(false);
-      let total = boardList.length + 1;
-      // console.log(total);
-      let nextData = await getLastBoard(total);
-      let newData = [...boardList, nextData];
-      await setBoardList(newData);
+      download();
       Alert.alert('보드를 생성했습니다!');
     }
   };
 
   const download = async () => {
     const result = await getBoardList();
-    console.log(result);
+    // console.log(result);
     setBoardList(result);
     setReady(true);
   };

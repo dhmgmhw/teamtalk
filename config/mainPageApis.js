@@ -18,19 +18,19 @@ export async function getBoardList() {
   }
 }
 
-export async function getLastBoard(total) {
-  try {
-    const response = await axios({
-      method: "get",
-      url: host + "/api/boards/" + total,
-    });
-    // console.log(response.data)
-    return response.data;
-  } catch (err) {
-    const error = err.response.data.error || err.message;
-    Alert.alert(error);
-  }
-}
+// export async function getLastBoard(total) {
+//   try {
+//     const response = await axios({
+//       method: "get",
+//       url: host + "/api/boards/" + total,
+//     });
+//     // console.log(response.data)
+//     return response.data;
+//   } catch (err) {
+//     const error = err.response.data.error || err.message;
+//     Alert.alert(error);
+//   }
+// }
 
 export async function createBoard(title) {
   try {
@@ -44,16 +44,18 @@ export async function createBoard(title) {
   }
 }
 
-// export async function getTargetBoard(board_id) {
-//   try {
-//     const response = await axios({
-//       method: "get",
-//       url: host + "/api/boards/" + board_id,
-//     });
-//     // console.log(response.data)
-//     return response.data;
-//   } catch (err) {
-//     const error = err.response.data.error || err.message;
-//     Alert.alert(error);
-//   }
-// }
+
+export async function deleteBoard(boardId, navigation) {
+  try {
+    await axios({
+      method: "delete",
+      url: host + "/api/boards/" + boardId,
+    });
+    navigation.push('MainPage')
+    Alert.alert('보드를 삭제했습니다.')
+  } catch (err) {
+    const error = err.response.data.error || err.message;
+    Alert.alert(error);
+  }
+}
+

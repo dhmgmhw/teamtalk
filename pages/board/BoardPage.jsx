@@ -33,7 +33,7 @@ export default function BoardPage({ navigation, route }) {
   const [newPin, setNewPin] = useState();
   const [newCard, setNewCard] = useState();
 
-  const [pins, setPins] = useState();
+  const [pins, setPins] = useState(data.pins);
   const [pinId, setPinId] = useState();
 
   const showPinMaker = () => {
@@ -59,7 +59,6 @@ export default function BoardPage({ navigation, route }) {
       Alert.alert('카드 이름을 입력해주세요!');
     } else {
       await createCard(newCard, pinId);
-      // console.log(newCard);
       setNewCard('');
       SetInputVisible(false);
       download();
@@ -67,8 +66,8 @@ export default function BoardPage({ navigation, route }) {
   };
 
   const download = async () => {
-    const result = await getPins();
-    setPins(result[boardId - 1].pins);
+    const result = await getPins(boardId);
+    setPins(result.pins);
     setReady(true);
   };
 
@@ -173,7 +172,6 @@ export default function BoardPage({ navigation, route }) {
                       </Pressable>
                     );
                   })}
-
                   {inputVisible ? (
                     <View style={styles.inputBox}>
                       <TextInput
@@ -182,42 +180,60 @@ export default function BoardPage({ navigation, route }) {
                         onChangeText={setNewCard}
                         value={newCard}
                       />
-                      <Pressable style={styles.addBtn} onPress={createNewCard}>
-                        <Text
-                          style={{
-                            fontSize: 15,
-                            fontWeight: '500',
-                            color: '#EBEBEB',
-                            textAlign: 'center',
-                            marginTop: 4,
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                        }}>
+                        <Pressable
+                          style={styles.addBtn}
+                          onPress={() => {
+                            SetInputVisible(false);
                           }}>
-                          Add
-                        </Text>
-                      </Pressable>
+                          <Text
+                            style={{
+                              fontSize: 16,
+                              fontWeight: '500',
+                              color: 'white',
+                              textAlign: 'center',
+                            }}>
+                            Close
+                          </Text>
+                        </Pressable>
+                        <Pressable
+                          style={styles.addBtn}
+                          onPress={createNewCard}>
+                          <Text
+                            style={{
+                              fontSize: 16,
+                              fontWeight: '500',
+                              color: 'white',
+                              textAlign: 'center',
+                            }}>
+                            Add
+                          </Text>
+                        </Pressable>
+                      </View>
                     </View>
                   ) : (
-                    <></>
-                  )}
-                  <Pressable
-                    style={styles.cardBtn}
-                    onPress={() => {
-                      {
-                        inputVisible
-                          ? SetInputVisible(false)
-                          : SetInputVisible(true);
+                    <Pressable
+                      style={styles.cardBtn}
+                      onPress={() => {
+                        SetInputVisible(true);
                         setPinId(innerPin.id);
-                      }
-                    }}>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontWeight: '500',
-                        color: 'white',
-                        textAlign: 'center',
                       }}>
-                      Card
-                    </Text>
-                  </Pressable>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontWeight: '500',
+                          color: 'white',
+                          textAlign: 'center',
+                          marginVertical: 5,
+                        }}>
+                        Card
+                      </Text>
+                    </Pressable>
+                  )}
                 </View>
               </ScrollView>
             );
@@ -239,7 +255,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 10,
     padding: 10,
-    marginBottom: 10,
+    marginBottom: 5,
   },
   cardTitle: {
     fontSize: 18,
@@ -264,6 +280,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: diviceHeight,
     padding: 10,
+    shadowColor: 'grey',
+    shadowOffset: {
+      width: 1,
+      height: 3,
+    },
+    shadowOpacity: 0.7,
+    shadowRadius: 3,
   },
   pinAddBtn: {
     padding: 5,
@@ -290,25 +313,23 @@ const styles = StyleSheet.create({
   inputBox: {
     width: '100%',
     flex: 1,
-    flexDirection: 'row',
-    marginVertical: 15,
+    marginTop: 15,
+    marginBottom: 5,
   },
   input: {
     backgroundColor: '#EBEBEB',
-    width: '80%',
+    width: '100%',
     height: 35,
     paddingLeft: 10,
     alignSelf: 'center',
     borderRadius: 10,
-    marginBottom: 10,
+    marginBottom: 5,
   },
   addBtn: {
-    marginBottom: 10,
-    padding: 5,
-    width: '20%',
+    paddingTop: 5,
+    width: 80,
     borderColor: '#EBEBEB',
   },
-
   inputCard: {
     backgroundColor: '#EBEBEB',
     width: '100%',
@@ -318,7 +339,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
   },
-
   addPinBtn: {
     position: 'absolute',
     height: 60,

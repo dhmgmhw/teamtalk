@@ -1,21 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, Dimensions, Pressable } from 'react-native';
+import { deleteBoard } from '../../config/MainPageApis';
 
 const diviceWidth = Dimensions.get('window').width;
 
 export default function BoardComponent({ navigation, board }) {
+  const boardId = board.id;
+
+  const removeBoard = async () => {
+    await deleteBoard(boardId, navigation);
+  };
+
   return (
-    <Pressable
-      style={styles.card}
-      onPress={() => {
-        navigation.navigate('BoardPage', board);
-      }}
-      onLongPress={() => {
-        console.log('Delete!');
-      }}>
-      <Text style={styles.groupName}>{board.title}</Text>
-      <Text style={styles.groupMember}>{board.user}</Text>
-    </Pressable>
+    <>
+      <Pressable
+        style={styles.card}
+        onPress={() => {
+          navigation.navigate('BoardPage', board);
+        }}
+        onLongPress={removeBoard}>
+        <Text style={styles.groupName}>{board.title}</Text>
+        <Text style={styles.groupMember}>{board.user}</Text>
+      </Pressable>
+    </>
   );
 }
 
@@ -36,9 +43,9 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
   groupName: {
-    fontSize: 23,
+    fontSize: 20,
     color: 'white',
-    fontWeight: '600',
+    fontWeight: '500',
     marginTop: 20,
     marginLeft: 25,
   },

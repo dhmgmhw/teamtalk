@@ -4,15 +4,16 @@ import axios from "axios";
 
 const host = "http://3.35.208.142"
 
-export async function getPins() {
+export async function getPins(boardId) {
     try {
         const response = await axios({
             method: "get",
-            url: host + "/api",
+            url: host + "/api/boards/" + boardId,
         });
+        // console.log(response)
         return response.data;
     } catch (err) {
-        const error = err.response.data.error || err.message;
+        const error = err.respocnse.data.error || err.message;
         Alert.alert(error);
     }
 }
@@ -42,6 +43,24 @@ export async function getCardDetail(cardId) {
         const response = await axios({
             method: "get",
             url: host + "/api/cards/" + cardId,
+        });
+        // console.log(response.data)
+        return response.data;
+    } catch (err) {
+        const error = err.response.data.error || err.message;
+        Alert.alert(error);
+    }
+}
+
+export async function putDescription(description, cardId, title) {
+    try {
+        const response = await axios({
+            method: "put",
+            url: host + "/api/cards/" + cardId,
+            data: {
+                title: title,
+                description: description,
+            }
         });
         // console.log(response.data)
         return response.data;

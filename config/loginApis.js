@@ -15,7 +15,6 @@ export async function register(name, password, skill, navigation) {
         skill: skill,
       },
     });
-
     if (response.data.success) {
       Alert.alert("회원가입 성공!");
       navigation.push("LoginPage");
@@ -24,7 +23,6 @@ export async function register(name, password, skill, navigation) {
     }
   } catch (err) {
     const error = err.response.data.error || err.message;
-
     Alert.alert(error);
   }
 }
@@ -38,15 +36,12 @@ export async function signIn(name, password, navigation) {
         password: password,
       },
     });
-
     const token = response.data.result.user.token;
     await AsyncStorage.setItem("session", token);
-
     Alert.alert("로그인 성공!");
     navigation.push("MainPage");
   } catch (err) {
     const error = err.response.data.err || err.message;
-
     Alert.alert(error);
   }
 }
@@ -59,7 +54,6 @@ export async function signOut(navigation) {
     navigation.push("LoginPage");
   } catch (err) {
     const error = err.response.data.error || err.message;
-
     Alert.alert(error);
   }
 }
