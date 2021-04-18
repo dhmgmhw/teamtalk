@@ -15,11 +15,7 @@ import { Container, Icon } from 'native-base';
 import HeaderComponent from '../../components/main/HeaderComponent';
 import BoardComponent from '../../components/main/BoardComponent';
 import Loading from '../../Loading';
-import {
-  getBoardList,
-  createBoard,
-  getLastBoard,
-} from '../../config/MainPageApis';
+import { getBoardList, createBoard } from '../../config/MainPageApis';
 
 const diviceWidth = Dimensions.get('window').width;
 const diviceHeight = Dimensions.get('window').Height;
