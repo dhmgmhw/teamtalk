@@ -46,14 +46,14 @@ export async function signIn(name, password, navigation) {
   }
 }
 
-export async function signOut(navigation) {
-  try {
-    await AsyncStorage.clear();
+// export async function signOut(navigation) {
+//   try {
+//     await AsyncStorage.clear();
 
-    Alert.alert("로그아웃!");
-    navigation.push("LoginPage");
-  } catch (err) {
-    const error = err.response.data.error || err.message;
-    Alert.alert(error);
-  }
-}
+//     Alert.alert("로그아웃!");
+//     navigation.push("LoginPage");
+//   } catch (err) {
+//     const error = err.response.data.error || err.message;
+//     Alert.alert(error);
+//   }
+// }
