@@ -67,7 +67,6 @@ export default function SignUpPage({ navigation }) {
             <TouchableOpacity
               onPress={async () => {
                 await skillChoose(react);
-                await Alert.alert('React 선택!');
               }}>
               <Image style={styles.text} source={react} resizeMode={'cover'} />
             </TouchableOpacity>
@@ -76,7 +75,6 @@ export default function SignUpPage({ navigation }) {
             <TouchableOpacity
               onPress={async () => {
                 await skillChoose(reactnative);
-                await Alert.alert('ReactNative 선택!');
               }}>
               <Image
                 style={styles.text}
@@ -89,7 +87,6 @@ export default function SignUpPage({ navigation }) {
             <TouchableOpacity
               onPress={async () => {
                 await skillChoose(spring);
-                await Alert.alert('Spring 선택!');
               }}>
               <Image style={styles.text} source={spring} resizeMode={'cover'} />
             </TouchableOpacity>
@@ -98,7 +95,6 @@ export default function SignUpPage({ navigation }) {
             <TouchableOpacity
               onPress={async () => {
                 await skillChoose(node);
-                await Alert.alert('Node.js 선택!');
               }}>
               <Image style={styles.text} source={node} resizeMode={'cover'} />
             </TouchableOpacity>
