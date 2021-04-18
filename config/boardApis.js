@@ -28,6 +28,18 @@ export async function createPin(boardId, title) {
     }
 }
 
+export async function deletePin(pinId) {
+    try {
+        await axios({
+            method: "delete",
+            url: host + "/api/pins/" + pinId,
+        });
+    } catch (err) {
+        const error = err.response.data.error || err.message;
+        Alert.alert(error);
+    }
+}
+
 export async function createCard(title, pinId) {
     try {
         await axios.post(host + "/api/cards/" + pinId, {
@@ -54,16 +66,15 @@ export async function getCardDetail(cardId) {
 
 export async function putDescription(description, cardId, title) {
     try {
-        const response = await axios({
+        await axios({
             method: "put",
             url: host + "/api/cards/" + cardId,
             data: {
-                title: title,
-                description: description,
+                'description': description,
+                'title': title
             }
         });
-        // console.log(response.data)
-        return response.data;
+        Alert.alert('수정 완료!')
     } catch (err) {
         const error = err.response.data.error || err.message;
         Alert.alert(error);
