@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,6 +9,8 @@ import {
   Pressable,
   Image,
   Alert,
+  RefreshControl,
+  SafeAreaView,
 } from 'react-native';
 import BoardHeaderComponent from '../../components/board/BoardHeaderComponent';
 import Loading from '../../Loading';
@@ -19,6 +21,10 @@ import Swiper from 'react-native-swiper-hooks';
 
 const diviceWidth = Dimensions.get('window').width;
 const diviceHeight = Dimensions.get('window').height;
+
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
 export default function BoardPage({ navigation, route }) {
   const [ready, setReady] = useState(false);
@@ -35,6 +41,14 @@ export default function BoardPage({ navigation, route }) {
 
   const [pins, setPins] = useState(data.pins);
   const [pinId, setPinId] = useState();
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(async () => {
+    await setRefreshing(true);
+    await wait(1000).then(() => setRefreshing(false));
+    await download();
+  }, []);
 
   const showPinMaker = () => {
     visible ? SetVisible(false) : SetVisible(true);
@@ -126,6 +140,13 @@ export default function BoardPage({ navigation, route }) {
           {pins.map((innerPin, i) => {
             return (
               <ScrollView
+                contentContainerStyle={styles.scrollView}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                  />
+                }
                 style={{
                   width: diviceWidth,
                 }}
