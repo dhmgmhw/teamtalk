@@ -18,20 +18,6 @@ export async function getBoardList() {
   }
 }
 
-// export async function getLastBoard(total) {
-//   try {
-//     const response = await axios({
-//       method: "get",
-//       url: host + "/api/boards/" + total,
-//     });
-//     // console.log(response.data)
-//     return response.data;
-//   } catch (err) {
-//     const error = err.response.data.error || err.message;
-//     Alert.alert(error);
-//   }
-// }
-
 export async function createBoard(title) {
   try {
     await axios.post(host + "/api/boards", {
@@ -43,7 +29,6 @@ export async function createBoard(title) {
     Alert.alert(error);
   }
 }
-
 
 export async function deleteBoard(boardId, navigation) {
   try {
