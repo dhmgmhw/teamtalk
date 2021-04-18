@@ -22,13 +22,14 @@ const diviceHeight = Dimensions.get('window').height;
 export default function CardDetailPage({ navigation, route }) {
   const cardId = route.params;
 
-  const [mainTitle, SetMainTitle] = useState('');
-  const [desc, SetDesc] = useState('');
-  const [comment, SetComment] = useState('');
+  const [mainTitle, setMainTitle] = useState('');
+  const [desc, setDesc] = useState('');
+  const [comment, setComment] = useState('');
 
   const [visible, setVisible] = useState(false);
 
   const [text, onChangeText] = useState();
+  const [titleSetter, setTitleSetter] = useState(mainTitle);
 
   const toggleOverlay = () => {
     setVisible(!visible);
@@ -36,16 +37,17 @@ export default function CardDetailPage({ navigation, route }) {
 
   const download = async () => {
     const result = await getCardDetail(cardId);
-    SetMainTitle(result.card.title);
-    SetDesc(result.card.description);
-    SetComment(result.card.comment);
+    setMainTitle(result.card.title);
+    setDesc(result.card.description);
+    setComment(result.card.comment);
+    onChangeText(result.card.description);
+    setTitleSetter(result.card.title);
   };
 
   const donePressed = async () => {
-    const result = await putDescription(desc, cardId, mainTitle);
-    console.log(result);
+    await putDescription(text, cardId, titleSetter);
     toggleOverlay();
-    onChangeText('');
+    await download();
   };
 
   const cancelPressed = () => {
@@ -126,7 +128,15 @@ export default function CardDetailPage({ navigation, route }) {
               </Pressable>
             }
             centerComponent={
-              <Text style={styles.headerTitle}>Description</Text>
+              // <Text style={styles.headerTitle}>Description</Text>
+              <TextInput
+                style={styles.titleInput}
+                onChangeText={(text) => {
+                  setTitleSetter(text);
+                }}
+                value={titleSetter}
+                placeholder='Description'
+              />
             }
             rightComponent={
               <Pressable onPress={donePressed}>
@@ -138,7 +148,9 @@ export default function CardDetailPage({ navigation, route }) {
             <View style={styles.descInputBox}>
               <TextInput
                 style={styles.descInput}
-                onChangeText={onChangeText}
+                onChangeText={(text) => {
+                  onChangeText(text);
+                }}
                 value={text}
                 multiline={true}
                 placeholder='Description'
@@ -190,6 +202,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   descInput: { textAlignVertical: 'top', padding: 20 },
+  titleInput: { fontSize: 17, fontWeight: '500', color: '#202540' },
   headerTitle: {
     fontSize: 17,
     fontWeight: '500',
