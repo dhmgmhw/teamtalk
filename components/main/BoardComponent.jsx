@@ -32,7 +32,7 @@ export default function BoardComponent({ navigation, board }) {
           setVisible(true);
         }}>
         <Text style={styles.groupName}>{board.title}</Text>
-        <Text style={styles.groupMember}>{board.user}</Text>
+        {/* <Text style={styles.groupMember}>{board.user}</Text> */}
       </Pressable>
       <Overlay
         isVisible={visible}
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     height: 70,
     backgroundColor: '#202540',
     alignSelf: 'center',
-    marginTop: 10,
+    marginTop: 5,
     borderRadius: 10,
     shadowColor: 'black',
     shadowOffset: {

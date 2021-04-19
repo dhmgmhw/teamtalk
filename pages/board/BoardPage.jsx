@@ -200,7 +200,7 @@ export default function BoardPage({ navigation, route }) {
                               justifyContent: 'flex-end',
                               alignItems: 'center',
                             }}>
-                            <Text style={styles.cardUser}>유저</Text>
+                            {/* <Text style={styles.cardUser}>유저</Text>
                             <Image
                               style={{
                                 width: 25,
@@ -209,7 +209,7 @@ export default function BoardPage({ navigation, route }) {
                               }}
                               resizeMode='cover'
                               source={require('../../assets/iu.png')}
-                            />
+                            /> */}
                           </View>
                         </Pressable>
                       );
