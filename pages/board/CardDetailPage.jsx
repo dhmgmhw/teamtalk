@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -14,7 +14,12 @@ import {
 import { Header, Overlay } from 'react-native-elements';
 import { Icon, Container, Item, Input } from 'native-base';
 import CardHeaderComponent from '../../components/board/CardHeaderComponent';
-import { getCardDetail, putDescription } from '../../config/BoardApis';
+import {
+  getCardDetail,
+  putDescription,
+  createComment,
+  deleteCard,
+} from '../../config/BoardApis';
 const diviceBottom = Platform.OS === 'ios' ? 30 : 0;
 const diviceWidth = Dimensions.get('window').width;
 const diviceHeight = Dimensions.get('window').height;
@@ -30,6 +35,7 @@ export default function CardDetailPage({ navigation, route }) {
 
   const [text, onChangeText] = useState();
   const [titleSetter, setTitleSetter] = useState(mainTitle);
+  const [inputComment, setInputComment] = useState();
 
   const toggleOverlay = () => {
     setVisible(!visible);
@@ -44,6 +50,12 @@ export default function CardDetailPage({ navigation, route }) {
     setTitleSetter(result.card.title);
   };
 
+  const leaveComment = async () => {
+    await createComment(inputComment, cardId);
+    setInputComment('');
+    await download();
+  };
+
   const donePressed = async () => {
     await putDescription(text, cardId, titleSetter);
     toggleOverlay();
@@ -53,6 +65,11 @@ export default function CardDetailPage({ navigation, route }) {
   const cancelPressed = () => {
     toggleOverlay();
     onChangeText('');
+  };
+
+  const removeCard = async () => {
+    await deleteCard(cardId);
+    navigation.pop();
   };
 
   useEffect(() => {
@@ -66,7 +83,11 @@ export default function CardDetailPage({ navigation, route }) {
       }}>
       <Container style={styles.container}>
         <StatusBar style='auto' />
-        <CardHeaderComponent navigation={navigation} title={mainTitle} />
+        <CardHeaderComponent
+          navigation={navigation}
+          title={mainTitle}
+          removeCard={removeCard}
+        />
         <View style={styles.descBox}>
           <Text
             style={{
@@ -90,12 +111,34 @@ export default function CardDetailPage({ navigation, route }) {
             }}>
             Comment
           </Text>
+
+          {/* {comment == null ? (
+            <Text style={styles.desc}>코멘트를 남겨보세요</Text>
+          ) : (
+            <>
+              {comment.map((comment, i) => {
+                return (
+                  <Text key={i} style={styles.desc}>
+                    {comment}
+                  </Text>
+                );
+              })}
+            </>
+          )} */}
+
           <Text style={styles.desc}>{comment}</Text>
         </View>
         <KeyboardAvoidingView style={styles.CommentBar} behavior='position'>
           <Item style={styles.CommentBox}>
             <Input
               placeholder='Leave Comment'
+              onChangeText={(comment) => {
+                setInputComment(comment);
+              }}
+              value={inputComment}
+              onFocus={() => {
+                console.log(inputComment);
+              }}
               style={{
                 paddingLeft: 20,
                 backgroundColor: '#eeeeee',
@@ -108,8 +151,9 @@ export default function CardDetailPage({ navigation, route }) {
             />
             <Icon
               active
+              // onPress={leaveComment}
               onPress={() => {
-                console.log('comment!');
+                console.log(inputComment);
               }}
               name='chatbox'
               style={{ marginHorizontal: 10, top: 5, color: '#202540' }}
@@ -128,7 +172,6 @@ export default function CardDetailPage({ navigation, route }) {
               </Pressable>
             }
             centerComponent={
-              // <Text style={styles.headerTitle}>Description</Text>
               <TextInput
                 style={styles.titleInput}
                 onChangeText={(text) => {

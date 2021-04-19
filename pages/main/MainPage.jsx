@@ -50,6 +50,9 @@ export default function MainPage({ navigation }) {
   };
 
   useEffect(() => {
+    navigation.addListener('beforeRemove', (e) => {
+      e.preventDefault();
+    });
     download();
   }, []);
 

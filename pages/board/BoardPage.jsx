@@ -200,7 +200,7 @@ export default function BoardPage({ navigation, route }) {
                               justifyContent: 'flex-end',
                               alignItems: 'center',
                             }}>
-                            {/* <Text style={styles.cardUser}>유저</Text>
+                            <Text style={styles.cardUser}>Anonymous</Text>
                             <Image
                               style={{
                                 width: 25,
@@ -209,7 +209,7 @@ export default function BoardPage({ navigation, route }) {
                               }}
                               resizeMode='cover'
                               source={require('../../assets/iu.png')}
-                            /> */}
+                            />
                           </View>
                         </Pressable>
                       );
@@ -282,6 +282,65 @@ export default function BoardPage({ navigation, route }) {
             );
           })}
         </Swiper>
+        <Overlay
+          isVisible={delVisible}
+          overlayStyle={{
+            backgroundColor: '#202540',
+            width: diviceWidth * 0.9,
+            shadowColor: 'black',
+            shadowOffset: {
+              width: 1,
+              height: 3,
+            },
+            shadowOpacity: 0.5,
+            shadowRadius: 3,
+          }}
+          onBackdropPress={toggleOverlay}>
+          <View style={styles.deleteBox}>
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: '500',
+                color: 'white',
+                textAlign: 'center',
+                marginVertical: 20,
+              }}>
+              핀을 삭제하시겠습니까?
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <Pressable
+                style={styles.selectBtn}
+                onPress={() => {
+                  setDelVisible(false);
+                }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '500',
+                    color: 'white',
+                    textAlign: 'center',
+                  }}>
+                  Cancel
+                </Text>
+              </Pressable>
+              <Pressable style={styles.selectBtn} onPress={removePin}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '500',
+                    color: 'white',
+                    textAlign: 'center',
+                  }}>
+                  Okay
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+        </Overlay>
         <Overlay
           isVisible={delVisible}
           overlayStyle={{
