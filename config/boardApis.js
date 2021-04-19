@@ -46,7 +46,8 @@ export async function createCard(title, pinId) {
             title: title,
         });
     } catch (err) {
-        Alert.alert(err);
+        const error = err.response.data.error || err.message;
+        Alert.alert(error);
     }
 }
 
@@ -70,8 +71,8 @@ export async function putDescription(description, cardId, title) {
             method: "put",
             url: host + "/api/cards/" + cardId,
             data: {
-                'description': description,
-                'title': title
+                description: description,
+                title: title
             }
         });
         Alert.alert('수정 완료!')
@@ -80,3 +81,30 @@ export async function putDescription(description, cardId, title) {
         Alert.alert(error);
     }
 }
+
+export async function deleteCard(cardId) {
+    try {
+        await axios({
+            method: "delete",
+            url: host + "/api/cards/" + cardId,
+        });
+        Alert.alert('카드를 삭제하였습니다.')
+    } catch (err) {
+        const error = err.response.data.error || err.message;
+        Alert.alert(error);
+    }
+}
+
+// export async function createComment(comment, cardId) {
+//     try {
+//         await axios.put(host + "/api/cards/" + cardId, {
+//             comment: comment,
+//         });
+//         console.log(comment)
+//         console.log(cardId)
+//         Alert.alert('댓글 등록 완료!')
+//     } catch (err) {
+//         const error = err.response.data.error || err.message;
+//         Alert.alert(error);
+//     }
+// }

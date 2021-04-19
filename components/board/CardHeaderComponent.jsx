@@ -3,7 +3,7 @@ import { StyleSheet, Text } from 'react-native';
 import { Icon } from 'native-base';
 import { Header } from 'react-native-elements';
 
-export default function CardHeaderComponent({ navigation, title }) {
+export default function CardHeaderComponent({ navigation, title, removeCard }) {
   return (
     <Header
       backgroundColor={'#ebebeb'}
@@ -17,7 +17,13 @@ export default function CardHeaderComponent({ navigation, title }) {
         />
       }
       centerComponent={<Text style={styles.cardTitle}>{title}</Text>}
-      rightComponent={''}
+      rightComponent={
+        <Icon
+          name='trash-outline'
+          style={{ color: '#202540', fontSize: 25, top: 5 }}
+          onPress={removeCard}
+        />
+      }
     />
   );
 }
