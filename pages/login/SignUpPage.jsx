@@ -23,19 +23,19 @@ const WindowWidth = Dimensions.get('window').width;
 
 import InputItem from '../../components/InputItem';
 
-import { signup, register } from '../../config/LoginApis';
+import { register } from '../../config/LoginApis';
 
 export default function SignUpPage({ navigation }) {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [skill, setSkill] = useState('주특기를 선택해주세요.');
+  const [skill, setSkill] = useState('주특기를 선택하지 않았습니다.');
 
   let skillChoose = (d) => {
     setSkill(d);
   };
 
-  const register = async () => {
+  const signup = async () => {
     if (password !== passwordConfirm) {
       Alert.alert('비밀번호가 서로 일치 하지 않습니다.');
       setPasswordConfirm('');
@@ -45,9 +45,10 @@ export default function SignUpPage({ navigation }) {
       setPassword('');
     }
     if (skill == '주특기를 선택해주세요.') {
-      Alert.alert('본인의 주특기를 선택해주세요.');
+      Alert.alert('주특기를 선택해주세요.');
     } else {
-      await signup(name, password, skill, navigation);
+      await register(name, password, skill, navigation);
+      Alert.alert('가입 성공!');
     }
   };
 
@@ -98,7 +99,7 @@ export default function SignUpPage({ navigation }) {
               <View style={[styles.child, { backgroundColor: 'transparent' }]}>
                 <TouchableOpacity
                   onPress={async () => {
-                    await skillChoose('Spring Boot');
+                    await skillChoose('Spring');
                   }}>
                   <Image
                     style={styles.text}
@@ -147,9 +148,10 @@ export default function SignUpPage({ navigation }) {
             />
             <TouchableOpacity
               style={[styles.button, styles.active]}
-              onPress={() => {
-                navigation.navigate('MainPage');
-              }}>
+              // onPress={() => {
+              //   navigation.navigate('MainPage');
+              // }}>
+              onPress={signup}>
               <Text style={{ fontSize: 17, color: 'white', fontWeight: '500' }}>
                 SIGN UP
               </Text>

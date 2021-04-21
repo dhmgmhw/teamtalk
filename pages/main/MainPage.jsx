@@ -12,6 +12,7 @@ import {
 import { Input, Overlay } from 'react-native-elements';
 import { Container, Icon } from 'native-base';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import HeaderComponent from '../../components/main/HeaderComponent';
 import BoardComponent from '../../components/main/BoardComponent';
 import Loading from '../../Loading';
@@ -21,6 +22,8 @@ const diviceWidth = Dimensions.get('window').width;
 const diviceHeight = Dimensions.get('window').Height;
 
 export default function MainPage({ navigation }) {
+  const [username, setUsername] = useState();
+
   const [ready, setReady] = useState(false);
   const [boardList, setBoardList] = useState();
   const [visible, setVisible] = useState(false);
@@ -35,16 +38,17 @@ export default function MainPage({ navigation }) {
       Alert.alert('보드 이름을 입력해주세요!');
       return false;
     } else {
-      await createBoard(title);
+      await createBoard(title, username);
       setVisible(false);
-      download();
+      // download();
       Alert.alert('보드를 생성했습니다!');
     }
   };
 
   const download = async () => {
-    const result = await getBoardList();
-    // console.log(result);
+    const username = await AsyncStorage.getItem('user');
+    setUsername(username);
+    const result = await getBoardList(username);
     setBoardList(result);
     setReady(true);
   };
@@ -54,11 +58,11 @@ export default function MainPage({ navigation }) {
       e.preventDefault();
     });
     download();
-  }, []);
+  }, [boardList]);
 
   return ready ? (
     <Container>
-      <HeaderComponent event={toggleOverlay} />
+      <HeaderComponent event={toggleOverlay} navigation={navigation} />
 
       <ScrollView style={styles.container}>
         {boardList == '' ? (
