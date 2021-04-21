@@ -29,7 +29,7 @@ export default function CardDetailPage({ navigation, route }) {
 
   const [mainTitle, setMainTitle] = useState('');
   const [desc, setDesc] = useState('');
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState([]);
 
   const [visible, setVisible] = useState(false);
 
@@ -112,7 +112,7 @@ export default function CardDetailPage({ navigation, route }) {
             Comment
           </Text>
 
-          {/* {comment == null ? (
+          {comment == null ? (
             <Text style={styles.desc}>코멘트를 남겨보세요</Text>
           ) : (
             <>
@@ -124,7 +124,7 @@ export default function CardDetailPage({ navigation, route }) {
                 );
               })}
             </>
-          )} */}
+          )}
 
           <Text style={styles.desc}>{comment}</Text>
         </View>
@@ -151,10 +151,7 @@ export default function CardDetailPage({ navigation, route }) {
             />
             <Icon
               active
-              // onPress={leaveComment}
-              onPress={() => {
-                console.log(inputComment);
-              }}
+              onPress={leaveComment}
               name='chatbox'
               style={{ marginHorizontal: 10, top: 5, color: '#202540' }}
             />
