@@ -1,6 +1,6 @@
 import { Alert } from "react-native";
 import axios from "axios";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const host = "http://3.35.208.142"
 
@@ -8,7 +8,7 @@ export async function getPins(boardId) {
     try {
         const response = await axios({
             method: "get",
-            url: host + "/api/boards/" + boardId,
+            url: host + `/api/boards/${boardId}`,
         });
         // console.log(response)
         return response.data;
@@ -20,7 +20,7 @@ export async function getPins(boardId) {
 
 export async function createPin(boardId, title) {
     try {
-        await axios.post(host + "/api/pins/" + boardId, {
+        await axios.post(host + `/api/boards/${boardId}`, {
             title: title,
         });
     } catch (err) {
@@ -32,7 +32,7 @@ export async function deletePin(pinId) {
     try {
         await axios({
             method: "delete",
-            url: host + "/api/pins/" + pinId,
+            url: host + `/api/pins/${pinId}`,
         });
     } catch (err) {
         const error = err.response.data.error || err.message;
@@ -42,7 +42,7 @@ export async function deletePin(pinId) {
 
 export async function createCard(title, pinId) {
     try {
-        await axios.post(host + "/api/cards/" + pinId, {
+        await axios.post(host + `/api/cards/${pinId}`, {
             title: title,
         });
     } catch (err) {
@@ -55,7 +55,7 @@ export async function getCardDetail(cardId) {
     try {
         const response = await axios({
             method: "get",
-            url: host + "/api/cards/" + cardId,
+            url: host + `/api/cards/${cardId}`,
         });
         // console.log(response.data)
         return response.data;
@@ -69,7 +69,7 @@ export async function putDescription(description, cardId, title) {
     try {
         await axios({
             method: "put",
-            url: host + "/api/cards/" + cardId,
+            url: host + `/api/cards/${cardId}`,
             data: {
                 description: description,
                 title: title
@@ -86,7 +86,7 @@ export async function deleteCard(cardId) {
     try {
         await axios({
             method: "delete",
-            url: host + "/api/cards/" + cardId,
+            url: host + `/api/cards/${cardId}`,
         });
         Alert.alert('카드를 삭제하였습니다.')
     } catch (err) {
@@ -95,16 +95,19 @@ export async function deleteCard(cardId) {
     }
 }
 
-// export async function createComment(comment, cardId) {
-//     try {
-//         await axios.put(host + "/api/cards/" + cardId, {
-//             comment: comment,
-//         });
-//         console.log(comment)
-//         console.log(cardId)
-//         Alert.alert('댓글 등록 완료!')
-//     } catch (err) {
-//         const error = err.response.data.error || err.message;
-//         Alert.alert(error);
-//     }
-// }
+export async function createComment(comment, card_id) {
+    try {
+        await axios({
+            method: "post",
+            url: host + `/api/cards/${card_id}/comments`,
+            data: {
+                comment: comment,
+            },
+        });
+    } catch (err) {
+        const error = err.response.data.err || err.message;
+        Alert.alert(error);
+    }
+}
+
+

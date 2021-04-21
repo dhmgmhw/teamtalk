@@ -2,43 +2,39 @@ import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
-// const host = 'http://52.79.227.130';
+const host = 'http://3.35.208.142';
 
-export async function register(name, password, skill, navigation) {
+export async function register(username, password, skill, navigation) {
   try {
-    const response = await axios({
+    await axios({
       method: "post",
-      url: host + "/signup",
+      url: host + "/api/signup",
       data: {
-        name: name,
+        username: username,
         password: password,
         skill: skill,
       },
     });
-    if (response.data.success) {
-      Alert.alert("회원가입 성공!");
-      navigation.push("LoginPage");
-    } else {
-      Alert.alert("회원가입 실패");
-    }
+    navigation.pop();
   } catch (err) {
     const error = err.response.data.error || err.message;
     Alert.alert(error);
   }
 }
-export async function signIn(name, password, navigation) {
+
+export async function signIn(username, password, navigation) {
   try {
     const response = await axios({
       method: "post",
-      url: host + "/login",
+      url: host + "/api/login",
       data: {
-        name: name,
+        username: username,
         password: password,
       },
     });
-    const token = response.data.result.user.token;
+    const token = response.data.token
     await AsyncStorage.setItem("session", token);
-    Alert.alert("로그인 성공!");
+    await AsyncStorage.setItem("user", username);
     navigation.push("MainPage");
   } catch (err) {
     const error = err.response.data.err || err.message;
@@ -46,14 +42,13 @@ export async function signIn(name, password, navigation) {
   }
 }
 
-// export async function signOut(navigation) {
-//   try {
-//     await AsyncStorage.clear();
-
-//     Alert.alert("로그아웃!");
-//     navigation.push("LoginPage");
-//   } catch (err) {
-//     const error = err.response.data.error || err.message;
-//     Alert.alert(error);
-//   }
-// }
+export async function signOut(navigation) {
+  try {
+    await AsyncStorage.clear();
+    Alert.alert("로그아웃!");
+    navigation.push("LoginPage");
+  } catch (err) {
+    const error = err.response.data.error || err.message;
+    Alert.alert(error);
+  }
+}
