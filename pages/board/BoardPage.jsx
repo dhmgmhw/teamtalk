@@ -92,6 +92,7 @@ export default function BoardPage({ navigation, route }) {
   };
 
   const download = async () => {
+    // console.log(boardId);
     const result = await getPins(boardId);
     setPins(result.pins);
     setReady(true);
@@ -103,7 +104,7 @@ export default function BoardPage({ navigation, route }) {
 
   useEffect(() => {
     download();
-  }, []);
+  }, [navigation]);
 
   return ready ? (
     <Container
