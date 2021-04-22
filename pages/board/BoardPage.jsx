@@ -9,11 +9,13 @@ import {
   Pressable,
   Image,
   Alert,
+  LogBox,
   RefreshControl,
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import BoardHeaderComponent from '../../components/board/BoardHeaderComponent';
 import Loading from '../../Loading';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Container, View } from 'native-base';
 import {
@@ -21,6 +23,7 @@ import {
   createCard,
   getPins,
   deletePin,
+  getUserInfo,
 } from '../../config/BoardApis';
 import Swiper from 'react-native-swiper-hooks';
 
@@ -32,11 +35,16 @@ const wait = (timeout) => {
 };
 
 export default function BoardPage({ navigation, route }) {
+  LogBox.ignoreLogs(['Warning: ...']);
+
   const data = route.params;
   const boardId = data.id;
   const title = data.title;
 
   const [ready, setReady] = useState(false);
+
+  const [username, setUsername] = useState('');
+  const [userSkill, setUserSkill] = useState('');
 
   const [visible, SetVisible] = useState(false);
   const [inputVisible, SetInputVisible] = useState(false);
@@ -60,17 +68,33 @@ export default function BoardPage({ navigation, route }) {
     visible ? SetVisible(false) : SetVisible(true);
   };
 
+  const loadUserInfo = async () => {
+    const result = await getUserInfo();
+    if (result.userSkill == 'React') {
+      setUserSkill(require(`../../assets/react.png`));
+    } else if (result.userSkill == 'React Native') {
+      setUserSkill(require(`../../assets/reactnative.png`));
+    } else if (result.userSkill == 'Spring') {
+      setUserSkill(require(`../../assets/spring.png`));
+    } else if (result.userSkill == 'Node.js') {
+      setUserSkill(require(`../../assets/node.png`));
+    } else {
+      setUserSkill(require(`../../assets/iu.png`));
+    }
+    const username = await AsyncStorage.getItem('user');
+    setUsername(username);
+  };
+
   const createNewPin = async () => {
     if (newPin == '') {
       Alert.alert('핀 이름을 입력해주세요!');
     } else {
       await createPin(boardId, newPin);
-      // console.log(newPin);
       {
         visible ? SetVisible(false) : SetVisible(true);
       }
       setNewPin('');
-      download();
+      // download();
     }
   };
 
@@ -81,21 +105,21 @@ export default function BoardPage({ navigation, route }) {
       await createCard(newCard, pinId);
       setNewCard('');
       SetInputVisible(false);
-      download();
+      // download();
     }
   };
 
   const removePin = async () => {
     await deletePin(pinId);
     setDelVisible(false);
-    download();
+    // download();
   };
 
   const download = async () => {
-    // console.log(boardId);
     const result = await getPins(boardId);
     setPins(result.pins);
     setReady(true);
+    loadUserInfo();
   };
 
   const toggleOverlay = () => {
@@ -104,7 +128,7 @@ export default function BoardPage({ navigation, route }) {
 
   useEffect(() => {
     download();
-  }, [navigation]);
+  }, [pins]);
 
   return ready ? (
     <Container
@@ -201,7 +225,7 @@ export default function BoardPage({ navigation, route }) {
                               justifyContent: 'flex-end',
                               alignItems: 'center',
                             }}>
-                            <Text style={styles.cardUser}>Anonymous</Text>
+                            <Text style={styles.cardUser}>{username}</Text>
                             <Image
                               style={{
                                 width: 25,
@@ -209,7 +233,7 @@ export default function BoardPage({ navigation, route }) {
                                 borderRadius: 100,
                               }}
                               resizeMode='cover'
-                              source={require('../../assets/iu.png')}
+                              source={userSkill}
                             />
                           </View>
                         </Pressable>
@@ -342,65 +366,6 @@ export default function BoardPage({ navigation, route }) {
             </View>
           </View>
         </Overlay>
-        <Overlay
-          isVisible={delVisible}
-          overlayStyle={{
-            backgroundColor: '#202540',
-            width: diviceWidth * 0.9,
-            shadowColor: 'black',
-            shadowOffset: {
-              width: 1,
-              height: 3,
-            },
-            shadowOpacity: 0.5,
-            shadowRadius: 3,
-          }}
-          onBackdropPress={toggleOverlay}>
-          <View style={styles.deleteBox}>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: '500',
-                color: 'white',
-                textAlign: 'center',
-                marginVertical: 20,
-              }}>
-              핀을 삭제하시겠습니까?
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <Pressable
-                style={styles.selectBtn}
-                onPress={() => {
-                  setDelVisible(false);
-                }}>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: '500',
-                    color: 'white',
-                    textAlign: 'center',
-                  }}>
-                  Cancel
-                </Text>
-              </Pressable>
-              <Pressable style={styles.selectBtn} onPress={removePin}>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: '500',
-                    color: 'white',
-                    textAlign: 'center',
-                  }}>
-                  Okay
-                </Text>
-              </Pressable>
-            </View>
-          </View>
-        </Overlay>
       </View>
     </Container>
   ) : (
@@ -453,8 +418,6 @@ const styles = StyleSheet.create({
   pinAddBtn: {
     padding: 5,
     width: 100,
-    borderColor: '#EBEBEB',
-    borderRadius: 100,
     alignSelf: 'center',
   },
   pinAddBox: {

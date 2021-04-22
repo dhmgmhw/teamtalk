@@ -1,15 +1,14 @@
 import { View } from 'native-base';
 import React, { useState } from 'react';
-import { StyleSheet, Text, Dimensions, Pressable } from 'react-native';
+import { StyleSheet, Text, Dimensions, Pressable, Image } from 'react-native';
 import { deleteBoard } from '../../config/MainPageApis';
 import { Overlay } from 'react-native-elements';
 
 const diviceWidth = Dimensions.get('window').width;
 const diviceHeight = Dimensions.get('window').height;
 
-export default function BoardComponent({ navigation, board }) {
+export default function BoardComponent({ navigation, board, username }) {
   const boardId = board.id;
-
   const [visible, setVisible] = useState(false);
 
   const toggleOverlay = () => {
@@ -32,7 +31,7 @@ export default function BoardComponent({ navigation, board }) {
           setVisible(true);
         }}>
         <Text style={styles.groupName}>{board.title}</Text>
-        {/* <Text style={styles.groupMember}>{board.user}</Text> */}
+        <Text style={styles.groupMember}>{username}</Text>
       </Pressable>
       <Overlay
         isVisible={visible}

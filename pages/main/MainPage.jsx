@@ -8,6 +8,7 @@ import {
   Alert,
   Text,
   Dimensions,
+  LogBox,
 } from 'react-native';
 import { Input, Overlay } from 'react-native-elements';
 import { Container, Icon } from 'native-base';
@@ -22,10 +23,12 @@ const diviceWidth = Dimensions.get('window').width;
 const diviceHeight = Dimensions.get('window').Height;
 
 export default function MainPage({ navigation }) {
+  LogBox.ignoreLogs(['Warning: ...']);
+
   const [username, setUsername] = useState();
 
   const [ready, setReady] = useState(false);
-  const [boardList, setBoardList] = useState();
+  const [boardList, setBoardList] = useState([]);
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState('');
 
@@ -38,9 +41,9 @@ export default function MainPage({ navigation }) {
       Alert.alert('보드 이름을 입력해주세요!');
       return false;
     } else {
-      await createBoard(title, username);
+      await createBoard(title);
       setVisible(false);
-      // download();
+      download();
       Alert.alert('보드를 생성했습니다!');
     }
   };
@@ -49,6 +52,7 @@ export default function MainPage({ navigation }) {
     const username = await AsyncStorage.getItem('user');
     setUsername(username);
     const result = await getBoardList(username);
+    // console.log(result);
     setBoardList(result);
     setReady(true);
   };
@@ -58,7 +62,7 @@ export default function MainPage({ navigation }) {
       e.preventDefault();
     });
     download();
-  }, [boardList]);
+  }, []);
 
   return ready ? (
     <Container>
@@ -82,7 +86,12 @@ export default function MainPage({ navigation }) {
         )}
         {boardList.map((board, i) => {
           return (
-            <BoardComponent board={board} key={i} navigation={navigation} />
+            <BoardComponent
+              board={board}
+              key={i}
+              navigation={navigation}
+              username={username}
+            />
           );
         })}
         <View>

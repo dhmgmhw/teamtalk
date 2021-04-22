@@ -4,6 +4,21 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const host = "http://3.35.208.142"
 
+export async function getUserInfo() {
+    try {
+        const username = await AsyncStorage.getItem('user');
+        const response = await axios({
+            method: "get",
+            url: host + `/main/${username}`,
+        });
+        // console.log(response.data)
+        return response.data;
+    } catch (err) {
+        const error = err.response.data.error || err.message;
+        Alert.alert(error);
+    }
+}
+
 export async function getPins(boardId) {
     try {
         const response = await axios({
@@ -20,11 +35,20 @@ export async function getPins(boardId) {
 
 export async function createPin(boardId, title) {
     try {
-        await axios.post(host + `/api/boards/${boardId}`, {
-            title: title,
+        const token = await AsyncStorage.getItem('session');
+        await axios({
+            method: "post",
+            url: host + `/api/pins/${boardId}`,
+            data: {
+                title: title
+            },
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
         });
     } catch (err) {
-        Alert.alert(err);
+        const error = err.response.data.error || err.message;
+        Alert.alert(error);
     }
 }
 
@@ -95,13 +119,35 @@ export async function deleteCard(cardId) {
     }
 }
 
+export async function getComments(card_id) {
+    try {
+        const token = await AsyncStorage.getItem('session');
+        const response = await axios({
+            method: "get",
+            url: host + `/api/cards/${card_id}/comments`,
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+        });
+        // console.log(response.data)
+        return response.data;
+    } catch (err) {
+        const error = err.response.data.error || err.message;
+        Alert.alert(error);
+    }
+}
+
 export async function createComment(comment, card_id) {
     try {
+        const token = await AsyncStorage.getItem('session');
         await axios({
             method: "post",
             url: host + `/api/cards/${card_id}/comments`,
             data: {
                 comment: comment,
+            },
+            headers: {
+                Authorization: 'Bearer ' + token,
             },
         });
     } catch (err) {
@@ -110,4 +156,41 @@ export async function createComment(comment, card_id) {
     }
 }
 
+export async function putComment(comment, card_id, comment_id) {
+    try {
+        const token = await AsyncStorage.getItem('session');
+        await axios({
+            method: "put",
+            url: host + `/api/cards/${card_id}/comments/${comment_id}`,
+            data: {
+                comment: comment,
+            },
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+        });
+        Alert.alert('수정 완료!')
+    } catch (err) {
+        const error = err.response.data.error || err.message;
+        Alert.alert(error);
+    }
+}
 
+export async function deleteComment(comment, card_id, comment_id) {
+    try {
+        const token = await AsyncStorage.getItem('session');
+        await axios({
+            method: "delete",
+            url: host + `/api/cards/${card_id}/comments/${comment_id}`,
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+        });
+        Alert.alert('삭제 완료!')
+    } catch (err) {
+        const error = err.response.data.error || err.message;
+        Alert.alert(error);
+    }
+}
+
+// 코멘트 관련 api들은 전부 토큰까지 넘겨줍시다.
