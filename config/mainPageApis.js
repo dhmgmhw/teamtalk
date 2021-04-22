@@ -18,7 +18,7 @@ export async function getBoardList(username) {
   }
 }
 
-export async function createBoard(title, username) {
+export async function createBoard(title) {
   try {
     const token = await AsyncStorage.getItem('session');
     // console.log(token)
@@ -30,7 +30,6 @@ export async function createBoard(title, username) {
         Authorization: 'Bearer ' + token,
       },
     });
-    // console.log(username)
   } catch (err) {
     const error = err.response.data.error || err.message;
     Alert.alert(error);
@@ -39,9 +38,13 @@ export async function createBoard(title, username) {
 
 export async function deleteBoard(boardId, navigation) {
   try {
+    const token = await AsyncStorage.getItem('session');
     await axios({
       method: "delete",
-      url: host + `/main/boards/${boardId}`,
+      url: host + `/api/boards/${boardId}`,
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
     });
     navigation.push('MainPage')
     Alert.alert('보드를 삭제했습니다.')
@@ -50,4 +53,3 @@ export async function deleteBoard(boardId, navigation) {
     Alert.alert(error);
   }
 }
-
