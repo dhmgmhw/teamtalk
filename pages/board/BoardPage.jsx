@@ -56,8 +56,8 @@ export default function BoardPage({ navigation, route }) {
   const [pins, setPins] = useState(data.pins);
   const [pinId, setPinId] = useState();
 
+  // refresh컨트롤
   const [refreshing, setRefreshing] = useState(false);
-
   const onRefresh = useCallback(async () => {
     await setRefreshing(true);
     await wait(1000).then(() => setRefreshing(false));
@@ -178,6 +178,7 @@ export default function BoardPage({ navigation, route }) {
           autoplay={false}
           loop={false}
           style={styles.pin}>
+          {/* 각 핀 */}
           {pins.map((innerPin, i) => {
             return (
               <Pressable
@@ -208,7 +209,7 @@ export default function BoardPage({ navigation, route }) {
                       }}>
                       {innerPin.title}
                     </Text>
-
+                    {/* 핀 안의 각각의 카드 */}
                     {innerPin.cards.map((card, i) => {
                       return (
                         <Pressable
@@ -239,6 +240,7 @@ export default function BoardPage({ navigation, route }) {
                         </Pressable>
                       );
                     })}
+                    {/* 카드 생성 창 */}
                     {inputVisible ? (
                       <View style={styles.inputBox}>
                         <TextInput
@@ -307,6 +309,8 @@ export default function BoardPage({ navigation, route }) {
             );
           })}
         </Swiper>
+
+        {/* 핀 삭제 컨트롤 오버레이 */}
         <Overlay
           isVisible={delVisible}
           overlayStyle={{

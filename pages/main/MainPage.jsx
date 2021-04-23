@@ -16,8 +16,9 @@ import { Container, Icon } from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HeaderComponent from '../../components/main/HeaderComponent';
 import BoardComponent from '../../components/main/BoardComponent';
-import Loading from '../../Loading';
 import { getBoardList, createBoard } from '../../config/MainPageApis';
+
+import Loading from '../../Loading';
 
 const diviceWidth = Dimensions.get('window').width;
 const diviceHeight = Dimensions.get('window').Height;
@@ -25,12 +26,11 @@ const diviceHeight = Dimensions.get('window').Height;
 export default function MainPage({ navigation }) {
   LogBox.ignoreLogs(['Warning: ...']);
 
-  const [username, setUsername] = useState();
-
   const [ready, setReady] = useState(false);
   const [boardList, setBoardList] = useState([]);
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState('');
+  const [username, setUsername] = useState();
 
   const toggleOverlay = () => {
     setVisible(!visible);
@@ -48,11 +48,11 @@ export default function MainPage({ navigation }) {
     }
   };
 
+  // 최초 실행될 때 준비할 데이터
   const download = async () => {
     const username = await AsyncStorage.getItem('user');
     setUsername(username);
     const result = await getBoardList(username);
-    // console.log(result);
     setBoardList(result);
     setReady(true);
   };
@@ -84,6 +84,8 @@ export default function MainPage({ navigation }) {
         ) : (
           <></>
         )}
+
+        {/* 각각의 보드들 */}
         {boardList.map((board, i) => {
           return (
             <BoardComponent
@@ -95,6 +97,7 @@ export default function MainPage({ navigation }) {
           );
         })}
         <View>
+          {/* HeaderComponent의 보드 추가 버튼을 눌렀을 때 나타날 Overlay 화면 */}
           <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
             <View style={styles.modalBox}>
               <Input

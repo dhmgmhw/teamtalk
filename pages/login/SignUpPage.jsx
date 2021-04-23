@@ -1,5 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,17 +12,17 @@ import {
   Keyboard,
 } from 'react-native';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
-import { Thumbnail } from 'native-base';
 
+import { register } from '../../config/LoginApis';
+import InputItem from '../../components/InputItem';
+
+// 기술스택 이미지 경로
 const react = require('../../assets/react.png');
 const reactnative = require('../../assets/reactnative.png');
 const spring = require('../../assets/spring.png');
 const node = require('../../assets/node.png');
+
 const WindowWidth = Dimensions.get('window').width;
-
-import InputItem from '../../components/InputItem';
-
-import { register } from '../../config/LoginApis';
 
 export default function SignUpPage({ navigation }) {
   const [name, setName] = useState('');
@@ -44,7 +43,7 @@ export default function SignUpPage({ navigation }) {
       setPasswordConfirm('');
       setPassword('');
     }
-    if (skill == '주특기를 선택해주세요.') {
+    if (skill == '주특기를 선택하지 않았습니다.') {
       Alert.alert('주특기를 선택해주세요.');
     } else {
       await register(name, password, skill, navigation);
@@ -53,11 +52,13 @@ export default function SignUpPage({ navigation }) {
   };
 
   return (
+    // TouchableWithoutFeedback로 ios환경에서 다른영역 터치 시 키보드가 내려가도록 함 Keyboard.dismiss
     <TouchableWithoutFeedback
       onPress={() => {
         Keyboard.dismiss();
       }}>
       <View style={styles.container}>
+        {/* KeyboardAvoidingView로 ios환경에서 키보드가 인풋을 가리는 것을 방지함 */}
         <KeyboardAvoidingView behavior={'position'}>
           <Text
             style={{
@@ -148,9 +149,6 @@ export default function SignUpPage({ navigation }) {
             />
             <TouchableOpacity
               style={[styles.button, styles.active]}
-              // onPress={() => {
-              //   navigation.navigate('MainPage');
-              // }}>
               onPress={signup}>
               <Text style={{ fontSize: 17, color: 'white', fontWeight: '500' }}>
                 SIGN UP

@@ -28,6 +28,7 @@ export default function LoginPage({ navigation }) {
 
   const showButton = () => {
     if (name == '' || password == '') {
+      // name, password가 공란이면 버튼 disabled
       return (
         <TouchableOpacity disabled style={[styles.button, styles.disabled]}>
           <Text style={styles.text}>Log In</Text>
@@ -48,9 +49,9 @@ export default function LoginPage({ navigation }) {
     navigation.addListener('beforeRemove', (e) => {
       e.preventDefault();
     });
+    // 최초실행시 AsyncStorage에 토큰이 있다면 MainPage로 이동
     setTimeout(() => {
       AsyncStorage.getItem('session', (err, result) => {
-        // console.log(result);
         if (result) {
           navigation.push('MainPage');
         } else {
@@ -124,7 +125,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   active: {
     opacity: 1,
   },

@@ -19,6 +19,7 @@ const StackNavigator = () => {
         name='LoginPage'
         component={LoginPage}
         options={{ gestureEnabled: false }}
+        // gestureEnabled: false를 넣어줌으로써 LoginPage, MainPage에서의 ios뒤로가기 제스처가 나타나지 못하게 함
       />
       <Stack.Screen name='SignUpPage' component={SignUpPage} />
       <Stack.Screen

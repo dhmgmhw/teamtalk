@@ -30,7 +30,9 @@ import {
   deleteComment,
 } from '../../config/BoardApis';
 
+// 기기가 ios일 때 가독성을 위해 띄어줄 정도
 const diviceBottom = Platform.OS === 'ios' ? 30 : 0;
+
 const diviceWidth = Dimensions.get('window').width;
 const diviceHeight = Dimensions.get('window').height;
 
