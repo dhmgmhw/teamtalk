@@ -194,3 +194,17 @@ export async function deleteComment(comment, card_id, comment_id) {
 }
 
 // 코멘트 관련 api들은 전부 토큰까지 넘겨줍시다.
+
+export async function postBook(data) {
+    try {
+        const response = await axios({
+            method: "post",
+            url: host + '/api/test',
+            data: data,
+        });
+        console.log(response.data)
+    } catch (err) {
+        const error = err.response.data.err || err.message;
+        Alert.alert(error);
+    }
+}

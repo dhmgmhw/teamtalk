@@ -8,7 +8,7 @@ export async function register(username, password, skill, navigation) {
   try {
     await axios({
       method: "post",
-      url: host + "/api/signup",
+      url: "http://3.36.116.168/api/test",
       data: {
         username: username,
         password: password,
@@ -21,6 +21,24 @@ export async function register(username, password, skill, navigation) {
     Alert.alert(error);
   }
 }
+
+
+export async function postBook(avs) {
+  // console.log(avs)
+  fetch(
+    host + '/api/test',
+    {
+      method: 'post',
+      body: avs,
+    }
+  ).then(response => {
+    console.log(JSON.stringify(response));
+  }).catch(err => {
+    console.log(err);
+  });
+}
+
+
 
 export async function signIn(username, password, navigation) {
   try {

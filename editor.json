@@ -1,0 +1,43 @@
+{
+    "type": "default",
+    "status": 200,
+    "ok": true,
+    "statusText": "",
+    "headers": {
+        "map": {
+            "x-content-type-options": "nosniff",
+            "expires": "0",
+            "connection": "keep-alive",
+            "pragma": "no-cache",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "content-length": "0",
+            "vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
+            "date": "Wed, 05 May 2021 06:29:36 GMT",
+            "x-frame-options": "SAMEORIGIN",
+            "x-xss-protection": "1; mode=block",
+            "keep-alive": "timeout=60"
+        }
+    },
+    "url": "http://3.36.116.168/api/test",
+    "bodyUsed": false,
+    "_bodyInit": {
+        "_data": {
+            "size": 0,
+            "offset": 0,
+            "blobId": "2B0166A7-198E-41BA-8960-0BA8B6C6C7A2",
+            "type": null,
+            "name": "test",
+            "__collector": {}
+        }
+    },
+    "_bodyBlob": {
+        "_data": {
+            "size": 0,
+            "offset": 0,
+            "blobId": "2B0166A7-198E-41BA-8960-0BA8B6C6C7A2",
+            "type": null,
+            "name": "test",
+            "__collector": {}
+        }
+    }
+}
