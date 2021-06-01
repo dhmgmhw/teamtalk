@@ -1,4 +1,5 @@
 # **TeamTalk - MiniProject**
+![teamtalk](https://user-images.githubusercontent.com/73983229/120288305-06b46e80-c2fb-11eb-8f78-d019ca5ce5aa.png)
 
 `팀 프로젝트를 효율적으로 작업하기 위한 관리 도구`
 
@@ -17,9 +18,6 @@
 ## 개발
 - Expo
 - React Native, JavaScript
-<br>
-<br>
-
 ---
 ## 팀원 역할
 
