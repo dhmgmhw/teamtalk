@@ -24,7 +24,6 @@
 ### front-end
 - 문형원(https://github.com/dhmgmhw)  
   - 모든 기능 구현 
-<br>
 
 ### back-end
 - 이승민 (https://github.com/metorg)  
