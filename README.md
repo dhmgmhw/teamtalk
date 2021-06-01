@@ -21,6 +21,12 @@
 ---
 ## 팀원 역할
 
+### front-end
+- 문형원(https://github.com/dhmgmhw)  
+  - 모든 기능 구현 
+<br>
+
+
 ### back-end
 - 이승민 (https://github.com/metorg)  
   * API 설계, DB 설계
@@ -33,10 +39,6 @@
   * spring security + Jwt 토큰 (Bearer 타입) 로그인, 회원가입 기능 구현
   * 서버 배포, 프론트 연동
   
-### front-end
-- 문형원(https://github.com/dhmgmhw)  
-  - 모든 기능 구현 
-<br>
 
 ---
 ## 도메인 분석 설계
